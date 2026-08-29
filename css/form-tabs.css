@@ -1,0 +1,187 @@
+/*
+ * CSS Dedicado para Formulários com Separadores (Tabs)
+ * Baseado no layout da "Imagem 1" (Formulário longo/Ficha)
+ */
+
+.tabs-page-wrapper {
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    padding: 20px 30px;
+    background-color: transparent;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Título e Ações */
+.tabs-header-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.tabs-main-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+}
+
+.tabs-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Corpo principal do formulário */
+.tabs-body {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Navegação das Abas */
+.tabs-nav {
+    display: flex;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
+    padding: 0 24px;
+    overflow-x: auto;
+}
+
+.tab-btn {
+    padding: 18px 24px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: #6b7280;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tab-btn:hover {
+    color: #374151;
+}
+
+.tab-btn.active {
+    color: #224F52;
+    border-bottom-color: #224F52;
+}
+
+/* Conteúdo da Aba */
+.tab-content {
+    display: none;
+    padding: 32px;
+    animation: fadeInTab 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeInTab {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Grupos do Formulário */
+.form-section-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-top: 0;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.form-group-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.form-input, .form-select, .form-textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background: white;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #1f2937;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none;
+    border-color: #61D0AD;
+    box-shadow: 0 0 0 3px rgba(97, 208, 173, 0.2);
+}
+
+.form-input::placeholder, .form-textarea::placeholder {
+    color: #9ca3af;
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Foto Upload Area no formulário longo */
+.form-photo-upload {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.form-photo-preview {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #f3f4f6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 2px dashed #d1d5db;
+    color: #9ca3af;
+    font-size: 2rem;
+}
+
+.form-photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.form-photo-actions p {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 8px;
+}

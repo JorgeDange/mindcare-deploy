@@ -1,0 +1,356 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+/* Split Layout base */
+.split-layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Painel Esquerdo (Imagem + Texto) */
+.left-pane {
+  flex: 1.1;
+  position: relative;
+  background-image: url('/public/assets/SECRETARIA 2.jpg');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 50px 80px;
+  color: #fff;
+}
+
+/* Overlay Verde Escuro da MindCare */
+.left-pane-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(34, 79, 82, 0.85); /* #224F52 */
+  z-index: 1;
+}
+
+.left-content {
+  position: relative;
+  z-index: 2;
+  max-width: 500px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.left-content h1 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 3.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 25px;
+}
+
+.left-content p {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  opacity: 0.9;
+  margin-bottom: 40px;
+}
+
+/* --- Testemunhos Removidos --- */
+
+/* Painel Direito (Formulário) */
+.right-pane {
+  flex: 0.9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: #ffffff;
+  overflow-y: auto;
+}
+
+.form-container {
+  width: 100%;
+  max-width: 440px;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-header img {
+  max-height: 50px;
+  margin-bottom: 25px;
+}
+
+.form-header h2 {
+  font-size: 2rem;
+  color: #224F52;
+  font-family: 'DM Sans', sans-serif;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.form-header p {
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Botões Sociais */
+.social-login {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.btn-social {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.btn-social:hover {
+  background: #f9f9f9;
+}
+
+.google-btn { color: #DB4437; }
+.linkedin-btn { color: #0077b5; }
+
+/* Campos do Formulário */
+form { text-align: left; }
+
+.form-group-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-group-row .form-group {
+  flex: 1;
+}
+
+.form-group {
+  margin-bottom: 18px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: #fafafa;
+  outline: none;
+  transition: all 0.2s;
+  color: #333;
+}
+
+.form-input::placeholder { color: #aaa; }
+.form-input:focus {
+  border-color: #224F52;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(34, 79, 82, 0.1);
+}
+
+.phone-group {
+  display: flex;
+  gap: 10px;
+}
+
+.phone-prefix {
+  width: 110px;
+  padding: 0 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f0f0f0;
+  color: #555;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+small {
+  font-size: 11px;
+  color: #888;
+  display: block;
+  margin-top: 6px;
+}
+
+/* Opções de Logotipo (Lembrar-me, Recuperar Senha) */
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  font-size: 0.9rem;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #555;
+  cursor: pointer;
+}
+
+.forgot-link {
+  color: #224F52;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* Botão Principal */
+.btn-submit {
+  width: 100%;
+  padding: 15px;
+  background: #224F52;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.1s;
+  margin-bottom: 25px;
+  font-family: 'Inter', sans-serif;
+}
+
+.btn-submit:hover {
+  background: #163a3c;
+}
+
+.btn-submit:active {
+  transform: scale(0.98);
+}
+
+/* Footer do Form */
+.form-footer {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.form-footer a {
+  color: #224F52;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 5px;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsividade Avançada */
+@media (max-width: 900px) {
+  .left-pane {
+    display: none;
+  }
+  
+  .right-pane {
+    flex: 1;
+    width: 100%;
+    padding: 30px 25px;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+  }
+  
+  .form-container {
+    max-width: 440px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .form-header h2 {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .right-pane {
+    padding: 20px 15px;
+  }
+  
+  .form-header img {
+    max-height: 40px;
+    margin-bottom: 15px;
+  }
+  
+  .form-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .form-header p {
+    font-size: 0.85rem;
+  }
+
+  .social-login {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .btn-social {
+    width: 100%;
+    padding: 10px;
+    font-size: 0.85rem;
+  }
+
+  .form-group-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .form-group-row .form-group {
+    margin-bottom: 15px;
+  }
+
+  .phone-group {
+    flex-direction: column;
+  }
+  
+  .phone-prefix {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+
+  .form-input {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+  
+  .btn-submit {
+    padding: 14px;
+    font-size: 1rem;
+  }
+  
+  .form-options {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+}

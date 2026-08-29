@@ -1,0 +1,278 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@400;500;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #F8FAFC;
+    font-family: 'Inter', sans-serif;
+    color: #334155;
+    min-height: 100vh;
+    display: flex;
+}
+
+.auth-split-layout {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    gap: 40px;
+}
+
+/* Left Pane */
+.auth-left {
+    flex: 1;
+    position: relative;
+    border-radius: 40px;
+    overflow: hidden;
+    /* Imagem base - será definida inline se necessário, ou aqui */
+    background-image: url('/assets/SECRETARIA 2.jpg');
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+}
+
+.auth-left-logo {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.auth-left-logo img {
+    height: 35px;
+}
+
+.auth-left-logo span {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #224F52; /* Cor da marca em vez do azul da imagem */
+    letter-spacing: 1px;
+}
+
+/* Caixa Glassmorphism */
+.glass-box {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    width: 80%;
+    max-width: 350px;
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.glass-box p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    line-height: 1.4;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.glass-box a {
+    display: inline-block;
+    padding: 10px 30px;
+    border: 1px solid #fff;
+    border-radius: 30px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.glass-box a:hover {
+    background: #fff;
+    color: #224F52;
+}
+
+/* Right Pane */
+.auth-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+.auth-form-container {
+    width: 100%;
+    max-width: 480px;
+}
+
+/* Progress Indicator */
+.auth-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 50px;
+    width: 100%;
+}
+
+.progress-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: #94A3B8;
+    font-weight: 500;
+}
+
+.progress-step.active {
+    color: #224F52; /* Azul escuro da marca */
+}
+
+.step-circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    border: 1px solid #CBD5E1;
+}
+
+.progress-step.active .step-circle {
+    background: #61D0AD; /* Verde claro da marca */
+    color: #fff;
+    border-color: #61D0AD;
+    font-weight: 700;
+}
+
+.progress-line {
+    height: 1px;
+    background: #E2E8F0;
+    width: 30px;
+}
+
+/* Formulário */
+.auth-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1E293B;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.form-group-row {
+    display: flex;
+    gap: 20px;
+}
+
+.form-group-row .auth-group {
+    flex: 1;
+}
+
+.auth-group {
+    margin-bottom: 25px;
+}
+
+.auth-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #475569;
+    margin-bottom: 8px;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 16px 20px;
+    background: #ffffff;
+    border: 1px solid #ffffff; /* Fundo branco e sem borda aparente, como na imagem */
+    border-radius: 12px;
+    font-size: 0.95rem;
+    color: #334155;
+    outline: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    transition: all 0.2s ease;
+}
+
+.auth-input::placeholder {
+    color: #94A3B8;
+    font-weight: 400;
+}
+
+.auth-input:focus {
+    border-color: #61D0AD;
+    box-shadow: 0 0 0 4px rgba(97, 208, 173, 0.1);
+}
+
+.auth-terms {
+    font-size: 0.75rem;
+    color: #64748B;
+    line-height: 1.5;
+    text-align: center;
+    margin-bottom: 25px;
+    margin-top: 10px;
+}
+
+.btn-auth-submit {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    background: #224F52; /* Cor principal em vez do azul da imagem */
+    color: #fff;
+    border: none;
+    border-radius: 30px; /* Botão bem arredondado como na imagem */
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(34, 79, 82, 0.2);
+}
+
+.btn-auth-submit:hover {
+    background: #17383a;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(34, 79, 82, 0.3);
+}
+
+/* Erros */
+.auth-error {
+    color: #ef4444;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    display: block;
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .auth-split-layout {
+        flex-direction: column;
+        padding: 0;
+        gap: 0;
+    }
+    
+    .auth-left {
+        display: none; /* Esconde a imagem no mobile para manter limpo o form */
+    }
+    
+    .auth-right {
+        padding: 30px 20px;
+    }
+
+    .auth-progress {
+        display: none; /* Esconde progress bar no mobile se faltar espaço */
+    }
+}

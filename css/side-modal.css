@@ -1,0 +1,503 @@
+/*
+ * Componente: Side Modal (Right Drawer / Bottom Sheet)
+ */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Overlay escuro de fundo */
+.side-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.4);
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.side-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* O Painel Principal que desliza */
+.side-modal-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    transform: translateX(100%);
+    width: 100%;
+    max-width: 600px;
+    height: 100vh;
+    height: 100dvh;
+    background: #ffffff;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+}
+
+.side-modal-overlay.active .side-modal-panel {
+    transform: translateX(0);
+}
+
+/* Header do Modal */
+.sm-header {
+    padding: 30px 40px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-shrink: 0;
+}
+
+.sm-header-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 0;
+}
+
+.sm-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #F8B400;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.sm-avatar img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.sm-avatar .sm-avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    background: #F3F4F6;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #224F52;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.sm-header-text {
+    min-width: 0;
+}
+
+.sm-header-text h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1E293B;
+    margin: 0 0 5px 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sm-header-text p {
+    font-size: 0.85rem;
+    color: #61D0AD;
+    margin: 0;
+    font-weight: 600;
+}
+
+.sm-header-text .sm-label {
+    font-size: 0.7rem;
+    color: #94A3B8;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 2px;
+    display: block;
+}
+
+/* Botões do Topo (Edit, Close) */
+.sm-top-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.sm-btn-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #F1F5F9;
+    border: none;
+    color: #94A3B8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.sm-btn-icon:hover {
+    background: #E2E8F0;
+    color: #1E293B;
+}
+
+.sm-btn-icon:active {
+    transform: scale(0.92);
+}
+
+.sm-btn-icon.close-btn {
+    font-size: 1.1rem;
+}
+
+/* Tabs do Modal */
+.sm-tabs {
+    display: flex;
+    gap: 25px;
+    padding: 0 40px;
+    border-bottom: 2px solid #F1F5F9;
+    margin-bottom: 25px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-shrink: 0;
+}
+
+.sm-tab {
+    padding: 10px 0 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #94A3B8;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.sm-tab.active {
+    color: #224F52;
+}
+
+.sm-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #224F52;
+    border-radius: 3px 3px 0 0;
+}
+
+/* Corpo (Formulário) */
+.sm-body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0 40px 20px;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Custom form elements matching the image */
+.sm-form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #F1F5F9;
+    padding-bottom: 15px;
+}
+
+.sm-form-group:last-child {
+    border-bottom: none;
+}
+
+.sm-label-col {
+    flex: 0 0 100px;
+    font-size: 0.85rem;
+    color: #94A3B8;
+    font-weight: 500;
+}
+
+.sm-input-col {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    min-width: 0;
+}
+
+.sm-input {
+    width: 100%;
+    max-width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #E2E8F0;
+    border-radius: 8px;
+    background: #F8FAFC;
+    color: #334155;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: all 0.2s;
+}
+
+.sm-input.focused-style {
+    border-color: #61D0AD;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(97, 208, 173, 0.15);
+}
+
+.sm-input:focus {
+    border-color: #61D0AD;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(97, 208, 173, 0.15);
+}
+
+select.sm-input {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394A3B8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.sm-link-action {
+    font-size: 0.75rem;
+    color: #224F52;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.sm-badge-select {
+    background: #61D0AD;
+    color: #ffffff;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.sm-badge-select i {
+    font-size: 0.7rem;
+}
+
+/* Footer (Actions) */
+.sm-footer {
+    padding: 25px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    border-top: 1px solid #F1F5F9;
+    flex-shrink: 0;
+}
+
+.sm-btn-cancel {
+    background: transparent;
+    border: 1.5px solid #E2E8F0;
+    color: #64748B;
+    padding: 14px 30px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.sm-btn-cancel:hover {
+    background: #F8FAFC;
+    color: #1E293B;
+    border-color: #CBD5E1;
+}
+
+.sm-btn-cancel:active {
+    transform: scale(0.97);
+}
+
+.sm-btn-save {
+    background: #224F52;
+    border: 1.5px solid #224F52;
+    color: #ffffff;
+    padding: 14px 30px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 10px rgba(34, 79, 82, 0.25);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.sm-btn-save:hover {
+    background: #1a3c3e;
+    border-color: #1a3c3e;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(34, 79, 82, 0.35);
+}
+
+.sm-btn-save:active {
+    transform: scale(0.97);
+}
+
+/* ── TABLET & MOBILE: < 900px ── */
+@media (max-width: 900px) {
+    .side-modal-panel {
+        max-width: 100%;
+    }
+}
+
+/* ── MOBILE: < 768px ── */
+@media (max-width: 768px) {
+    .side-modal-panel {
+        max-width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        border-radius: 0;
+    }
+    
+    .side-modal-panel.bottom-sheet {
+        top: auto;
+        bottom: 0;
+        height: auto;
+        max-height: 92vh;
+        max-height: 92dvh;
+        border-radius: 20px 20px 0 0;
+        transform: translateY(100%);
+    }
+
+    .side-modal-overlay.active .side-modal-panel.bottom-sheet {
+        transform: translateY(0);
+    }
+    
+    .sm-header, .sm-tabs, .sm-body, .sm-footer {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .sm-header {
+        padding-top: 20px;
+        padding-bottom: 12px;
+    }
+    
+    .sm-form-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .sm-label-col {
+        flex: auto;
+    }
+    
+    .sm-input-col {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .sm-footer {
+        padding-top: 16px;
+        padding-bottom: 16px;
+        gap: 12px;
+    }
+
+    .sm-btn-cancel, .sm-btn-save {
+        flex: 1;
+        text-align: center;
+        padding: 14px 16px;
+        font-size: 0.8rem;
+    }
+}
+
+/* ── XS: < 480px ── */
+@media (max-width: 480px) {
+    .side-modal-panel {
+        max-width: 100%;
+    }
+
+    .sm-header {
+        padding: 16px 16px 10px;
+    }
+
+    .sm-header, .sm-tabs, .sm-body, .sm-footer {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .sm-header-text h3 {
+        font-size: 1.1rem;
+    }
+
+    .sm-avatar {
+        width: 48px;
+        height: 48px;
+    }
+
+    .sm-avatar .sm-avatar-placeholder {
+        font-size: 1rem;
+    }
+
+    .sm-btn-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 0.85rem;
+    }
+
+    .sm-body {
+        padding-bottom: 16px;
+    }
+
+    .sm-form-group {
+        margin-bottom: 14px;
+        padding-bottom: 12px;
+    }
+
+    .sm-input {
+        padding: 10px 14px;
+        font-size: 0.85rem;
+    }
+
+    .sm-footer {
+        padding: 14px 16px;
+        flex-direction: column-reverse;
+        gap: 8px;
+    }
+
+    .sm-btn-cancel, .sm-btn-save {
+        width: 100%;
+        padding: 14px 16px;
+        font-size: 0.85rem;
+    }
+}
