@@ -199,9 +199,9 @@
                     organizacional e terapias especializadas.
                 </p>
                 <div class="social-links">
-                    <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61558615109679" target="_blank" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/mind_care.ao" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/company/mind-care-angola" target="_blank" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
                 </div>
             </div>
 
@@ -249,6 +249,7 @@
         <div class="footer-bottom">
             <div class="footer-bottom-content">
                 <p>&copy; 2024 Mind Care, Psicologia e Serviços, Lda. Todos os direitos reservados.</p>
+                <p class="footer-credit">Desenvolvido por <a href="http://otimize.ao/" target="_blank">Otimize.ao</a></p>
                 <div class="footer-legal">
                     <a href="#">Privacidade</a>
                     <a href="#">Termos</a>
