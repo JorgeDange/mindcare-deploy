@@ -39,9 +39,21 @@ O sistema foi **dividido em 2 repositórios** para hospedagem separada, mas ambo
 | 2FA | pragmarx/google2fa-laravel |
 | Chatbot | Ollama / Gemini (via API) |
 | Broadcast | Reverb (original) / Log (deploy) |
-| Queue | Database |
+| Queue | sync (deploy) |
 | Session | File |
 | Activity Log | spatie/laravel-activitylog |
+
+---
+
+## Ambiente de Produção (Deploy)
+
+- **Hospedagem**: Servidor partilhado (não InfinityFree)
+- **Document root**: `/home/mindcare/public_html/` (= project root, entry point é `index.php` na raiz)
+- **public_path()**: `/home/mindcare/public_html/` (a raiz É o public)
+- **Assets Vite**: Compilados em `build/` na raiz do projeto (NÃO em `public/build/`)
+- **Entry point**: `index.php` na raiz (não `public/index.php`)
+- **Logs**: `storage/logs/laravel.log`
+- **SMTP**: `srv2-lad.host2africa.ao:465` (SSL), user `noreply@mindcare.ao`
 
 ---
 
