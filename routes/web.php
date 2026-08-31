@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Portal\NotificacaoController;
 use App\Http\Controllers\PortalController;
 use App\Http\Controllers\ProfileController;
@@ -18,6 +19,7 @@ Route::get('/planos/familiar', [PublicController::class, 'familiar'])->name('pla
 Route::get('/planos/corporativo', [PublicController::class, 'corporativo'])->name('planos.corporativo');
 Route::get('/faq', [PublicController::class, 'faq'])->name('faq');
 Route::post('/chatbot/enviar', [ChatbotController::class, 'send'])->middleware('throttle:10,1');
+Route::post('/contacto', [ContactController::class, 'store'])->name('contacto.store')->middleware('throttle:5,1');
 
 // Portal Routes
 Route::middleware(['auth', 'verified', 'role:paciente', '2fa'])->prefix('portal')->group(function () {

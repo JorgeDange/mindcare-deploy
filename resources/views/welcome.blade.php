@@ -278,16 +278,29 @@
         </div>
         <div class="contact-form-side">
             <div class="glass-form">
-                <form action="#" class="contact-form">
+                @if(session('success'))
+                    <div style="background:#d4edda;color:#155724;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:14px;">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                @if($errors->any())
+                    <div style="background:#f8d7da;color:#721c24;padding:12px 16px;border-radius:8px;margin-bottom:16px;font-size:14px;">
+                        @foreach($errors->all() as $error)
+                            <p style="margin:2px 0;">{{ $error }}</p>
+                        @endforeach
+                    </div>
+                @endif
+                <form action="{{ route('contacto.store') }}" method="POST" class="contact-form">
+                    @csrf
                     <div class="form-grid">
-                        <input type="text" placeholder="Nome" required>
-                        <input type="tel" placeholder="Digite o seu telefone" required>
+                        <input type="text" name="nome" placeholder="Nome" value="{{ old('nome') }}" required>
+                        <input type="tel" name="telefone" placeholder="Digite o seu telefone" value="{{ old('telefone') }}" required>
                     </div>
                     <div class="form-grid">
-                        <input type="email" placeholder="E-mail" required>
-                        <input type="text" placeholder="Assunto (Opcional)">
+                        <input type="email" name="email" placeholder="E-mail" value="{{ old('email') }}" required>
+                        <input type="text" name="assunto" placeholder="Assunto (Opcional)" value="{{ old('assunto') }}">
                     </div>
-                    <textarea placeholder="Como podemos ajudar?" rows="4" required></textarea>
+                    <textarea name="mensagem" placeholder="Como podemos ajudar?" rows="4" required>{{ old('mensagem') }}</textarea>
                     <button type="submit" class="btn-submit">Enviar</button>
                 </form>
             </div>
