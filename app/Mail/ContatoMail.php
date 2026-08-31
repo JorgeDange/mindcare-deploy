@@ -12,16 +12,17 @@ class ContatoMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public array $data;
-
-    public function __construct(array $data)
-    {
-        $this->data = $data;
-    }
+    public function __construct(
+        public string $nome,
+        public string $telefone,
+        public string $email,
+        public ?string $assunto,
+        public string $mensagem,
+    ) {}
 
     public function envelope(): Envelope
     {
-        $assunto = $this->data['assunto'] ?? 'Novo contacto via site';
+        $assunto = $this->assunto ?: 'Novo contacto via site';
 
         return new Envelope(
             subject: "MindCare - {$assunto}",

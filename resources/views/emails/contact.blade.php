@@ -33,25 +33,25 @@
                                         <table width="100%" cellpadding="0" cellspacing="0">
                                             <tr>
                                                 <td style="padding:8px 0;color:#6e7979;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;width:120px;vertical-align:top;">Nome</td>
-                                                <td style="padding:8px 0;color:#071e27;font-size:15px;">{{ $data['nome'] }}</td>
+                                                <td style="padding:8px 0;color:#071e27;font-size:15px;">{{ $nome }}</td>
                                             </tr>
                                             <tr>
                                                 <td style="padding:8px 0;color:#6e7979;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;vertical-align:top;">Telefone</td>
-                                                <td style="padding:8px 0;color:#071e27;font-size:15px;">{{ $data['telefone'] }}</td>
+                                                <td style="padding:8px 0;color:#071e27;font-size:15px;">{{ $telefone }}</td>
                                             </tr>
                                             <tr>
                                                 <td style="padding:8px 0;color:#6e7979;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;vertical-align:top;">Email</td>
-                                                <td style="padding:8px 0;color:#005f5f;font-size:15px;">{{ $data['email'] }}</td>
+                                                <td style="padding:8px 0;color:#005f5f;font-size:15px;">{{ $email }}</td>
                                             </tr>
-                                            @if(!empty($data['assunto']))
+                                            @if(!empty($assunto))
                                             <tr>
                                                 <td style="padding:8px 0;color:#6e7979;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;vertical-align:top;">Assunto</td>
-                                                <td style="padding:8px 0;color:#071e27;font-size:15px;">{{ $data['assunto'] }}</td>
+                                                <td style="padding:8px 0;color:#071e27;font-size:15px;">{{ $assunto }}</td>
                                             </tr>
                                             @endif
                                             <tr>
                                                 <td style="padding:8px 0;color:#6e7979;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;vertical-align:top;">Mensagem</td>
-                                                <td style="padding:8px 0;color:#071e27;font-size:15px;line-height:1.6;">{!! nl2br(e($data['mensagem'])) !!}</td>
+                                                <td style="padding:8px 0;color:#071e27;font-size:15px;line-height:1.6;">{!! nl2br(e($mensagem)) !!}</td>
                                             </tr>
                                         </table>
                                     </td>
@@ -62,7 +62,7 @@
                             <table width="100%" cellpadding="0" cellspacing="0" style="margin-top:25px;">
                                 <tr>
                                     <td align="center">
-                                        <a href="mailto:{{ $data['email'] }}" style="display:inline-block;background-color:#005f5f;color:#ffffff;padding:12px 30px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;">
+                                        <a href="mailto:{{ $email }}" style="display:inline-block;background-color:#005f5f;color:#ffffff;padding:12px 30px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;">
                                             Responder por Email
                                         </a>
                                     </td>

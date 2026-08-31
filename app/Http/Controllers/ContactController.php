@@ -18,7 +18,13 @@ class ContactController extends Controller
             'mensagem' => 'required|string|max:2000',
         ]);
 
-        Mail::to('geral@mindcare.ao')->send(new ContatoMail($validated));
+        Mail::to('geral@mindcare.ao')->send(new ContatoMail(
+            nome: $validated['nome'],
+            telefone: $validated['telefone'],
+            email: $validated['email'],
+            assunto: $validated['assunto'] ?? null,
+            mensagem: $validated['mensagem'],
+        ));
 
         return redirect(route('home') . '#contacto')
             ->with('success', 'Mensagem enviada com sucesso! Entraremos em contacto brevemente.');
