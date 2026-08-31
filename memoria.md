@@ -38,10 +38,10 @@
 - DB_PASSWORD=mindcare@otimize
 
 ### SMTP
-- Host: `srv2-lad.host2africa.ao`
+- Host: `mail.mindcare.ao`
 - Port: 465 (SSL)
 - User: `noreply@mindcare.ao`
-- Password: `WD=hX+Wu0@%w;98Z`
+- Password: `yQ#d+=#@rogyN!pu` (precisa de aspas no .env por causa do #)
 
 ---
 
@@ -83,7 +83,7 @@ f3b5153 alteracao dos arquivos de public (moveu build/ para public/build/)
 | .env | ❌ VAZIO — eliminado do git no commit 86169a9 |
 | .env.example | ❌ VAZIO — limpo no commit bae2268 |
 | Site | ❌ Erro 500 (por causa do .env vazio) |
-| SMTP | ⚠️ Pendente — 535 Incorrect authentication data |
+| SMTP | ✅ ACTIVO — mail.mindcare.ao:465, testado e funcional |
 | build/ no servidor | ⚠️ Pode ainda ter public/build/ no servidor |
 
 ### O .env que FALTA (do commit 66566cf)
@@ -118,10 +118,10 @@ SESSION_DOMAIN=.mindcare.ao
 CACHE_STORE=file
 
 MAIL_MAILER=smtp
-MAIL_HOST=srv2-lad.host2africa.ao
+MAIL_HOST=mail.mindcare.ao
 MAIL_PORT=465
 MAIL_USERNAME=noreply@mindcare.ao
-MAIL_PASSWORD=WD=hX+Wu0@%w;98Z
+MAIL_PASSWORD="yQ#d+=#@rogyN!pu"
 MAIL_ENCRYPTION=ssl
 MAIL_FROM_ADDRESS="noreply@mindcare.ao"
 MAIL_FROM_NAME="MindCare"
