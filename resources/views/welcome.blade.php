@@ -273,7 +273,7 @@
             <div class="contact-details">
                 <h3 class="details-subtitle">Nossos Contactos:</h3>
                 <div class="detail-item"><i class="fa-solid fa-phone"></i><span>+244 932 380 303</span></div>
-                <div class="detail-item"><i class="fa-solid fa-envelope"></i><span>geral@mindcareangola.ao | mindcareangola@gmail.com</span></div>
+                <div class="detail-item"><i class="fa-solid fa-envelope"></i><span>geral@mindcare.ao</span></div>
             </div>
         </div>
         <div class="contact-form-side">

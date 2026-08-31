@@ -177,7 +177,7 @@
                 </div>
                 <div class="menu-contact">
                     <p><i data-lucide="phone"></i> +244 932 380 303</p>
-                    <p><i data-lucide="mail"></i> geral@mindcareangola.ao</p>
+                    <p><i data-lucide="mail"></i> geral@mindcare.ao</p>
                 </div>
             </div>
         </nav>
@@ -240,7 +240,7 @@
                     </li>
                     <li>
                         <i data-lucide="mail"></i>
-                        <span>geral@mindcareangola.ao</span>
+                        <span>geral@mindcare.ao</span>
                     </li>
                 </ul>
             </div>
