@@ -113,6 +113,7 @@ class PortalController extends Controller
             'telefone' => 'nullable|string|max:20',
             'data_nascimento' => 'nullable|date|before:today',
             'genero' => 'nullable|in:Masculino,Feminino,Outro',
+            'bi_numero' => 'nullable|string|max:20',
             'morada' => 'nullable|string|max:255',
             'provincia' => 'nullable|string|max:50',
             'contacto_emergencia' => 'nullable|string|max:100',
@@ -121,6 +122,7 @@ class PortalController extends Controller
             'condicoes' => 'nullable|string|max:1000',
             'medicacao' => 'nullable|string|max:500',
             'foto' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'preferencias' => 'nullable|array',
         ]);
 
         $user = Auth::user();
@@ -132,6 +134,7 @@ class PortalController extends Controller
             'telefone_alt' => array_key_exists('contacto_emergencia', $validated) ? $validated['contacto_emergencia'] : $user->telefone_alt,
             'data_nascimento' => array_key_exists('data_nascimento', $validated) ? $validated['data_nascimento'] : $user->data_nascimento,
             'genero' => array_key_exists('genero', $validated) ? $validated['genero'] : $user->genero,
+            'bi_numero' => array_key_exists('bi_numero', $validated) ? $validated['bi_numero'] : $user->bi_numero,
             'morada' => array_key_exists('morada', $validated) ? $validated['morada'] : $user->morada,
             'provincia' => array_key_exists('provincia', $validated) ? $validated['provincia'] : $user->provincia,
         ]);
@@ -143,6 +146,7 @@ class PortalController extends Controller
             'condicoes' => array_key_exists('condicoes', $validated) ? $validated['condicoes'] : $paciente->condicoes,
             'medicacao' => array_key_exists('medicacao', $validated) ? $validated['medicacao'] : $paciente->medicacao,
             'observacoes' => array_key_exists('observacoes', $validated) ? $validated['observacoes'] : $paciente->observacoes,
+            'preferencias' => array_key_exists('preferencias', $validated) ? $validated['preferencias'] : $paciente->preferencias,
         ]);
 
         // Tratar upload de foto
