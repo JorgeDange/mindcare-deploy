@@ -36,18 +36,6 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $dirs = [
-            storage_path('framework/views'),
-            storage_path('framework/cache'),
-            storage_path('framework/sessions'),
-            storage_path('logs'),
-        ];
-        foreach ($dirs as $dir) {
-            if (!is_dir($dir)) {
-                mkdir($dir, 0775, true);
-            }
-        }
-
         Model::preventLazyLoading(! $this->app->isProduction());
 
         Model::handleLazyLoadingViolationUsing(function ($model, $relation) {

@@ -8,6 +8,19 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Support\Facades\Route;
 
+$storageDirs = [
+    __DIR__.'/../storage/framework/views',
+    __DIR__.'/../storage/framework/cache',
+    __DIR__.'/../storage/framework/cache/data',
+    __DIR__.'/../storage/framework/sessions',
+    __DIR__.'/../storage/logs',
+];
+foreach ($storageDirs as $dir) {
+    if (!is_dir($dir)) {
+        mkdir($dir, 0775, true);
+    }
+}
+
 $app = Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
         web: __DIR__.'/../routes/web.php',
