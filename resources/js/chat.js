@@ -10,6 +10,7 @@ const closeChat = document.getElementById('close-chat');
 const toggleChat = () => {
     const isVisible = chat.style.display === 'flex';
     chat.style.display = isVisible ? 'none' : 'flex';
+    btn.style.visibility = isVisible ? 'visible' : 'hidden';
     if (!isVisible) {
         input.focus();
     }
