@@ -1,9 +1,0 @@
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home/cpsess9742955477/public_html/
-    - /bin/cp -R * $DEPLOYPATH
-    - /bin/mkdir -p $DEPLOYPATH/storage/framework/views
-    - /bin/mkdir -p $DEPLOYPATH/storage/framework/cache
-    - /bin/mkdir -p $DEPLOYPATH/storage/logs
-    - /bin/chmod -R 775 $DEPLOYPATH/storage
