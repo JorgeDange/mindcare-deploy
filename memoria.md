@@ -1,6 +1,6 @@
 # Memoria de Projeto — MindCare Deploy
 
-> Ultima actualizacao: 31 Agosto 2026
+> Ultima actualizacao: 2 Setembro 2026
 
 ---
 
@@ -55,6 +55,14 @@
 4. **Correccao do Vite manifest** — `build/` na raiz do projecto (nao em `public/build/`)
 5. **AllowOverride activado** — Suporte do Host2Africa activou `mod_rewrite` + `AllowOverride All`
 6. **Mensagem de suporte** — Enviada em português ao Host2Africa para activar AllowOverride
+7. **Colunas em falta nas tabelas** — Adicionadas via phpMyAdmin: `deleted_at`, `created_at`, `updated_at` em `pacientes` e `profissionais`; `activo` em `profissionais`; `activo`, `created_at`, `updated_at` em `planos`
+8. **Correccao de `pacientes.id`** — Tornada `PRIMARY KEY AUTO_INCREMENT`
+9. **Correccao do `PortalController::updatePerfil`** — Agora guarda `bi_numero` e `preferencias` no perfil do profissional
+10. **Correccao do filesystem config** — `config/filesystems.php`: public disk root mudado de `storage_path('app/public')` para `public_path('storage')`
+11. **Correccao do cache path (bootstrap)** — Directories de storage criados em `bootstrap/app.php` **antes** do config ser carregado — resolve o timing do `Please provide a valid cache path`
+12. **`.gitignore` actualizado** — Excepcoes `.gitkeep` para `storage/framework/views`, `cache`, `cache/data`, `sessions`, `logs`
+13. **`.gitkeep` criados** — Directories de storage trackeados pelo git
+14. **`.cpanel.yml` eliminado** — Deploy via git push (hooks do cPanel), nao mais via ficheiro de deploy
 
 ### Commits relevantes
 
@@ -67,6 +75,9 @@ bae2268 Clear .env.example of environment variable settings
 f3b5153 alteracao dos arquivos de public (moveu build/ para public/build/)
 66566cf update email corrigido em $data
 28e3398 updagre email send
+24db399 nova atualizacao
+600e14f fix: create storage subdirectories and set permissions on deploy
+6c4aff7 fix: create storage directories in bootstrap before config loads to prevent cache path error
 ```
 
 ---
@@ -80,13 +91,30 @@ f3b5153 alteracao dos arquivos de public (moveu build/ para public/build/)
 | AllowOverride | ✅ ACTIVO (suporte activou, site ja da 500 em vez de "Index of /") |
 | .htaccess | ✅ Correcto e a ser processado |
 | build/ | ✅ Na raiz do projecto |
-| .env | ❌ VAZIO — eliminado do git no commit 86169a9 |
-| .env.example | ❌ VAZIO — limpo no commit bae2268 |
-| Site | ❌ Erro 500 (por causa do .env vazio) |
+| .env | ✅ Restaurado pelo utilizador (nao committado) |
+| .cpanel.yml | ✅ Eliminado (deploy via git push) |
+| Cache path | ✅ CORRIGIDO — directories criados em `bootstrap/app.php` antes do config |
+| Site | ⚠️ Ainda 500 — `users.id` falta AUTO_INCREMENT |
 | SMTP | ✅ ACTIVO — mail.mindcare.ao:465, testado e funcional |
-| build/ no servidor | ⚠️ Pode ainda ter public/build/ no servidor |
+| DB tables | ✅ Pacientes, profissionais, planos com todas as colunas |
+| users.id | ❌ FALTA AUTO_INCREMENT — registro de utilizadores falha |
+
+### Erro actual: `users.id` sem AUTO_INCREMENT
+
+A tabela `users` foi criada manualmente no phpMyAdmin com o `id` como `INT UNSIGNED NOT NULL` **sem AUTO_INCREMENT**. Quando alguem tenta registar-se, dá:
+
+```
+SQLSTATE[HY000]: General error: 1364 Field 'id' doesn't have a default value
+```
+
+**Correccao (phpMyAdmin > SQL):**
+```sql
+ALTER TABLE `users` MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+```
 
 ### O .env que FALTA (do commit 66566cf)
+
+> NOTA: O .env ja foi restaurado pelo utilizador. Esta seccao fica como referencia.
 
 ```env
 APP_NAME=MindCare
@@ -138,15 +166,13 @@ CHATBOT_DRIVER=ollama
 
 ## 5. Proximos Passos
 
-1. **Restaurar o .env** — Repor o conteudo do .env (copiar do commit 66566cf)
-2. **Nao committar .env ao git** — Manter .env no .gitignore (ja estava)
-3. **Fazer push** — Enviar .env restaurado para o servidor
-4. **No servidor:** Executar `php artisan view:clear && php artisan cache:clear`
-5. **Verificar build/ no servidor** — Confirmar que build/ esta na raiz (nao public/build/)
-6. **Eliminar public/build/ no servidor** se ainda existir
-7. **Testar site** — Deveria carregar a pagina principal
-8. **Testar formulario de contacto**
-9. **Resolver SMTP** — Verificar credenciais de noreply@mindcare.ao (erro 535)
+1. **Corrigir `users.id` no phpMyAdmin** — `ALTER TABLE users MODIFY id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;`
+2. **Testar registo** — Criar novo utilizador em https://mindcare.ao/register
+3. **Testar login** — Entrar no portal com credenciais criadas
+4. **Testar perfil** — Verificar que `bi_numero` e `preferencias` sao guardados
+5. **Testar upload de foto** — Verificar que a foto aparece no perfil
+6. **Verificar logs** — Confirmar que nao ha mais erros de cache path
+7. **Limpar log** — `TRUNCATE TABLE laravel_log;` ou apagar `storage/logs/laravel.log` pelo cPanel
 
 ---
 
@@ -157,7 +183,9 @@ CHATBOT_DRIVER=ollama
 - `build/` deve ficar na RAIZ do projecto (nao em `public/build/`)
 - O servidor NAO suporta `public/` como directorio publico — a raiz IS o directorio publico
 - **.env NUNCA deve ser committado ao git** — usar .gitignore
+- **.cpanel.yml NAO existe mais** — deploy e via git push (hooks cPanel)
 - Guardar contexto em memoria.md sempre que houver dialogo
+- **Storage directories** sao criados em `bootstrap/app.php` antes do config — necessario porque `storage_path()` retorna path que o servidor nao tem
 
 ---
 
@@ -166,17 +194,22 @@ CHATBOT_DRIVER=ollama
 | Ficheiro | Descricao |
 |---|---|
 | `index.php` | Entry point do Laravel (raiz) |
+| `bootstrap/app.php` | Cria storage dirs ANTES do config — corrige cache path error |
 | `.htaccess` | Regras de rewrite Apache |
-| `.cpanel.yml` | Configuracao de deploy automatico |
 | `build/manifest.json` | Manifest Vite pre-compilado |
 | `.env` | Configuracao completa do projecto (NAO committar) |
 | `.env.example` | Template do .env (vazio) |
 | `ctx.md` | Documentacao completa do projecto |
 | `memoria.md` | Este ficheiro — memoria de contexto |
 | `app/Http/Controllers/ContactController.php` | Controller do formulario |
+| `app/Http/Controllers/PortalController.php` | Perfil do profissional (`updatePerfil`) |
+| `app/Providers/AppServiceProvider.php` | Regras de acesso e policies |
 | `app/Mail/ContatoMail.php` | Mailable |
 | `resources/views/emails/contact.blade.php` | Template do email |
-| `routes/web.php` | Rota de contacto (linha 22) |
+| `resources/views/portal/perfil.blade.php` | Formulario de perfil |
+| `routes/web.php` | Rotas principais |
+| `config/filesystems.php` | Public disk corrigido para `public_path('storage')` |
+| `.gitignore` | Excepcoes `.gitkeep` para storage |
 
 ---
 
@@ -187,3 +220,14 @@ O servidor da Host2Africa tem o document root como `/home/cpsess9742955477/publi
 
 ### Porque o .env nao pode ir ao git
 O .env contem password da base de dados, APP_KEY e credenciais SMTP. Deve ficar apenas no servidor, nunca no repositorio.
+
+### Porque o cache path dava erro (resolvido em 2026-09-02)
+O `config/cache.php` usa `storage_path('framework/cache/data')`. No servidor, os directories de storage nao existem porque o git so trackeia `.gitkeep` (ficheiros vazios, nao directorios). O `AppServiceProvider::boot()` criava as pastas, mas o config e avaliado ANTES do boot — por isso o `CacheManager` falhava.
+
+**Solucao:** Criar directories em `bootstrap/app.php` com `mkdir` antes de `$app = Application::configure(...)`. Isto garante que existem antes do config ser carregado.
+
+### Users.id sem AUTO_INCREMENT
+A tabela `users` foi criada manualmente no phpMyAdmin sem `AUTO_INCREMENT` no `id`. Qualquer tentativa de INSERT falha com `Field 'id' doesn't have a default value`. Corrigir com:
+```sql
+ALTER TABLE `users` MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+```
