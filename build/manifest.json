@@ -1,10 +1,6 @@
 {
-  "public/assets/SECRETARIA 2.jpg": {
-    "file": "assets/SECRETARIA 2-8-eI8YDh.jpg",
-    "src": "public/assets/SECRETARIA 2.jpg"
-  },
   "resources/css/app.css": {
-    "file": "assets/app-CIIV8L-E.css",
+    "file": "assets/app-BXXKmHbp.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
