@@ -35,26 +35,34 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var btn = document.getElementById('support-btn');
-            var chat = document.getElementById('chat-container');
-            var alvo = document.getElementById('contacto');
+        (function () {
+            function init() {
+                var btn = document.getElementById('support-btn');
+                var chat = document.getElementById('chat-container');
+                var alvo = document.getElementById('contacto');
 
-            if (!btn || !chat || !alvo) return;
+                if (!btn || !chat || !alvo) return;
 
-            var observer = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        btn.classList.add('chat-left');
-                        chat.classList.add('chat-left');
-                    } else {
-                        btn.classList.remove('chat-left');
-                        chat.classList.remove('chat-left');
-                    }
-                });
-            }, { threshold: 0.15 });
+                var observer = new IntersectionObserver(function (entries) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            btn.classList.add('chat-left');
+                            chat.classList.add('chat-left');
+                        } else {
+                            btn.classList.remove('chat-left');
+                            chat.classList.remove('chat-left');
+                        }
+                    });
+                }, { threshold: 0.1 });
 
-            observer.observe(alvo);
-        });
+                observer.observe(alvo);
+            }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
+            } else {
+                init();
+            }
+        })();
     </script>
 </section>

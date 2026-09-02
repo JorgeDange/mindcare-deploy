@@ -296,19 +296,13 @@
 
 /* Posição espelhada (esquerda) — activada pelo Intersection Observer quando #contacto está visível */
 #support-btn.chat-left {
-  right: auto;
-  left: 20px;
-}
-
-#support-btn.chat-left ~ #chat-container,
-#chat-container.chat-left {
-  right: auto;
-  left: 20px;
+  right: auto !important;
+  left: 20px !important;
 }
 
 #chat-container.chat-left {
-  right: auto;
-  left: 20px;
+  right: auto !important;
+  left: 20px !important;
 }
 
 /* Mobile adjustments */
@@ -328,12 +322,12 @@
 
   /* No mobile, espelhar para esquerda quando #contacto visível */
   #support-btn.chat-left {
-    right: auto;
-    left: 20px;
+    right: auto !important;
+    left: 20px !important;
   }
 
   #chat-container.chat-left {
-    right: 0;
-    left: 0;
+    right: 0 !important;
+    left: 0 !important;
   }
 }
