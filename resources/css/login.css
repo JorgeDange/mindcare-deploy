@@ -21,7 +21,7 @@ body {
 .left-pane {
   flex: 1.1;
   position: relative;
-  background-image: url('/public/assets/SECRETARIA 2.jpg');
+  background-image: url('/assets/SECRETARIA 2.jpg');
   background-size: cover;
   background-position: center;
   display: flex;

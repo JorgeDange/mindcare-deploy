@@ -3068,7 +3068,7 @@ body {
 
 /* ===== CONTACT SECTION (Glassmorphism Redesign) ===== */
 .contact {
-    background: linear-gradient(rgba(34, 79, 82, 0.9), rgba(34, 79, 82, 0.9)), url('/public/assets/SECRETARIA 2.jpg');
+    background: linear-gradient(rgba(34, 79, 82, 0.9), rgba(34, 79, 82, 0.9)), url('/assets/SECRETARIA 2.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
