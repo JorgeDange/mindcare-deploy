@@ -35,7 +35,6 @@ Route::middleware(['auth', 'verified', 'role:paciente', '2fa'])->prefix('portal'
     Route::get('/documentos', [PortalController::class, 'documentos'])->name('documentos');
     Route::get('/documentos/{documento}/download', [PortalController::class, 'downloadDocumento'])->name('portal.documento.download');
     Route::get('/documentos/{documento}/preview', [PortalController::class, 'previewDocumento'])->name('portal.documento.preview');
-    Route::get('/documentos/{documento}/info', [PortalController::class, 'infoDocumento'])->name('portal.documento.info');
     Route::get('/mensagens', [PortalController::class, 'mensagens'])->name('mensagens');
     Route::post('/mensagens', [PortalController::class, 'storeMensagem'])->name('portal.mensagens.store')->middleware('throttle:mensagens');
     Route::get('/mensagens/{conversa}/novas', [PortalController::class, 'novasMensagens'])->name('portal.mensagens.novas');

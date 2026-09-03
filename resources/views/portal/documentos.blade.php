@@ -300,11 +300,6 @@
             </div>
         </div>
         
-        <!-- PDF Preview -->
-        <div class="mt-4">
-            <iframe id="preview-doc-iframe" src="" class="w-full h-[500px] rounded-xl border border-outline-variant/20" frameborder="0"></iframe>
-        </div>
-
         <!-- Actions inside modal body -->
         <div class="pt-4 flex flex-col sm:flex-row gap-3">
             <button type="button" onclick="closeSideModal(null, 'modal-ver-documento')" class="flex-1 border border-outline text-on-surface font-bold py-3 px-4 rounded-xl hover:bg-surface-variant transition-all">
@@ -330,9 +325,8 @@ function abrirDocumento(id, nome, autor, data) {
     document.getElementById('preview-doc-autor').textContent = autor;
     document.getElementById('preview-doc-data').textContent = data;
     document.getElementById('preview-doc-descricao').textContent = 'A carregar detalhes...';
-    document.getElementById('preview-doc-iframe').src = `/portal/documentos/${id}/preview`;
     
-    fetch(`/portal/documentos/${id}/info`)
+    fetch(`/portal/documentos/${id}/preview`)
         .then(response => response.json())
         .then(data => {
             document.getElementById('preview-doc-descricao').textContent = data.descricao || 'Sem descrição adicional.';
