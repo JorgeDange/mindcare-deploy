@@ -189,7 +189,24 @@ class PortalController extends Controller
     {
         abort_if($documento->paciente_id !== Auth::user()->paciente?->id, 403);
 
+        if (! Storage::exists($documento->caminho)) {
+            return redirect()->back()->with('error', 'O ficheiro solicitado ainda nao esta disponivel no servidor.');
+        }
+
         $documento->forceFill(['novo' => false])->save();
+
+        $path = Storage::path($documento->caminho);
+        $mime = mime_content_type($path) ?: 'application/pdf';
+
+        return response()->file($path, [
+            'Content-Type' => $mime,
+            'Content-Disposition' => 'inline; filename="' . $documento->nome . '.pdf"',
+        ]);
+    }
+
+    public function infoDocumento(Documento $documento)
+    {
+        abort_if($documento->paciente_id !== Auth::user()->paciente?->id, 403);
 
         return response()->json([
             'nome' => $documento->nome,

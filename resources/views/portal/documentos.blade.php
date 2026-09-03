@@ -113,7 +113,7 @@
                                 <span class="material-symbols-outlined text-secondary flex-shrink-0">picture_as_pdf</span>
                                 <span class="text-body-sm font-bold text-on-surface truncate" title="{{ $fDoc->nome }}">{{ $fDoc->nome }}</span>
                             </div>
-                            <a href="{{ route('portal.documento.download', $fDoc->id) }}" class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors flex-shrink-0" title="Descarregar">download</a>
+                            <span onclick="abrirDocumento({{ $fDoc->id }}, '{{ addslashes($fDoc->nome) }}', '{{ addslashes($fDoc->partilhadoPor->name ?? 'Clínica') }}', '{{ $fDoc->created_at->format('d/m/Y') }}')" class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors flex-shrink-0" title="Visualizar">visibility</span>
                         </div>
                     @empty
                         <div class="text-center py-4 bg-surface rounded-lg text-body-sm text-on-surface-variant border border-dashed border-outline-variant/30">
@@ -191,9 +191,6 @@
                                 <button onclick="abrirDocumento({{ $doc->id }}, '{{ addslashes($doc->nome) }}', '{{ addslashes($doc->partilhadoPor->name ?? 'Clínica') }}', '{{ $doc->created_at->format('d/m/Y') }}')" class="w-9 h-9 text-on-surface-variant hover:text-primary hover:bg-surface rounded-lg flex items-center justify-center transition-all" title="Visualizar">
                                     <span class="material-symbols-outlined text-[18px]">visibility</span>
                                 </button>
-                                <a href="{{ route('portal.documento.download', $doc->id) }}" class="w-9 h-9 text-on-surface-variant hover:text-primary hover:bg-surface rounded-lg flex items-center justify-center transition-all" title="Descarregar">
-                                    <span class="material-symbols-outlined text-[18px]">download</span>
-                                </a>
                             </div>
                         </td>
                     </tr>
@@ -303,12 +300,13 @@
             </div>
         </div>
         
+        <!-- PDF Preview -->
+        <div class="mt-4">
+            <iframe id="preview-doc-iframe" src="" class="w-full h-[500px] rounded-xl border border-outline-variant/20" frameborder="0"></iframe>
+        </div>
+
         <!-- Actions inside modal body -->
         <div class="pt-4 flex flex-col sm:flex-row gap-3">
-            <a id="preview-doc-download-btn" href="#" class="flex-1 bg-primary text-on-primary font-bold py-3 px-4 rounded-xl shadow-md hover:opacity-90 active:scale-95 transition-all text-center flex items-center justify-center gap-2">
-                <span class="material-symbols-outlined text-[20px]">download</span>
-                Descarregar
-            </a>
             <button type="button" onclick="closeSideModal(null, 'modal-ver-documento')" class="flex-1 border border-outline text-on-surface font-bold py-3 px-4 rounded-xl hover:bg-surface-variant transition-all">
                 Fechar
             </button>
@@ -332,9 +330,9 @@ function abrirDocumento(id, nome, autor, data) {
     document.getElementById('preview-doc-autor').textContent = autor;
     document.getElementById('preview-doc-data').textContent = data;
     document.getElementById('preview-doc-descricao').textContent = 'A carregar detalhes...';
-    document.getElementById('preview-doc-download-btn').href = `/portal/documentos/${id}/download`;
+    document.getElementById('preview-doc-iframe').src = `/portal/documentos/${id}/preview`;
     
-    fetch(`/portal/documentos/${id}/preview`)
+    fetch(`/portal/documentos/${id}/info`)
         .then(response => response.json())
         .then(data => {
             document.getElementById('preview-doc-descricao').textContent = data.descricao || 'Sem descrição adicional.';

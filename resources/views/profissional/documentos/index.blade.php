@@ -101,7 +101,7 @@
                             <td class="py-3 px-4">
                                 <a href="{{ route('profissional.documentos.download', $doc) }}"
                                    class="font-label-md font-medium text-primary hover:underline flex items-center gap-1">
-                                    <span class="material-symbols-outlined text-[16px]">download</span> Download
+                                    <span class="material-symbols-outlined text-[16px]">visibility</span> Visualizar
                                 </a>
                             </td>
                         </tr>

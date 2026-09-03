@@ -320,8 +320,8 @@
                                     {{ $documento->created_at->format('d de F, Y') }}
                                 </div>
                                 <div class="md:col-span-2 flex justify-end gap-2 md:opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <a href="{{ route('portal.documento.download', $documento) }}" class="w-9 h-9 hover:bg-surface-container rounded-full flex items-center justify-center text-primary" title="Download">
-                                        <span class="material-symbols-outlined text-[18px]">download</span>
+                                    <a href="{{ route('portal.documento.preview', $documento) }}" target="_blank" class="w-9 h-9 hover:bg-surface-container rounded-full flex items-center justify-center text-primary" title="Visualizar">
+                                        <span class="material-symbols-outlined text-[18px]">visibility</span>
                                     </a>
                                 </div>
                             </div>
