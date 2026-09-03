@@ -175,7 +175,10 @@ class PortalController extends Controller
 
         $documento->forceFill(['novo' => false])->save();
 
-        return Storage::download($documento->caminho, $documento->nome);
+        $nomeSeguro = \Illuminate\Support\Str::ascii($documento->nome);
+        $nomeSeguro = preg_replace('/[^A-Za-z0-9_\-\.]/', '_', $nomeSeguro);
+
+        return Storage::download($documento->caminho, $nomeSeguro);
     }
 
     public function previewDocumento(Documento $documento)
