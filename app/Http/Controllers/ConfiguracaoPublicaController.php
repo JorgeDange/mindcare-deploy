@@ -3,41 +3,60 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 
 class ConfiguracaoPublicaController extends Controller
 {
     public function coordenadas(): JsonResponse
     {
-        $path = storage_path('app/configuracoes.json');
+        $config = DB::table('config_pagamento')
+            ->where('activo', true)
+            ->first();
 
-        $defaults = [
-            'dados_bancarios' => [
-                'banco' => '',
-                'iban' => 'AO06 0000 0000 0000 0000 0',
-                'titular' => 'MindCare Lda',
-                'referencia' => '',
-            ],
-            'metodos_pagamento' => [
-                'transferencia_bancaria' => true,
-                'deposito' => false,
-                'multicaixa' => true,
-            ],
-        ];
-
-        if (!file_exists($path)) {
-            return response()->json($defaults);
-        }
-
-        $raw = file_get_contents($path);
-        $config = json_decode($raw, true);
-
-        if (!is_array($config)) {
-            return response()->json($defaults);
+        if (!$config) {
+            return response()->json([
+                'dados_bancarios' => [
+                    'banco' => '',
+                    'iban' => 'AO06 0000 0000 0000 0000 0',
+                    'titular' => 'MindCare Lda',
+                    'conta' => '',
+                    'referencia' => '',
+                ],
+                'metodos_pagamento' => [
+                    'transferencia_bancaria' => true,
+                    'deposito' => false,
+                    'multicaixa' => true,
+                ],
+                'multicaixa' => [
+                    'referencia' => '',
+                    'telefone' => '',
+                ],
+                'deposito' => [
+                    'instrucoes' => '',
+                ],
+            ]);
         }
 
         return response()->json([
-            'dados_bancarios' => $config['dados_bancarios'] ?? $defaults['dados_bancarios'],
-            'metodos_pagamento' => $config['metodos_pagamento'] ?? $defaults['metodos_pagamento'],
+            'dados_bancarios' => [
+                'banco' => $config->banco,
+                'iban' => $config->iban,
+                'titular' => $config->titular,
+                'conta' => $config->conta,
+                'referencia' => $config->referencia,
+            ],
+            'metodos_pagamento' => [
+                'transferencia_bancaria' => (bool) $config->metodo_transferencia,
+                'deposito' => (bool) $config->metodo_deposito,
+                'multicaixa' => (bool) $config->metodo_multicaixa,
+            ],
+            'multicaixa' => [
+                'referencia' => $config->multicaixa_referencia,
+                'telefone' => $config->multicaixa_telefone,
+            ],
+            'deposito' => [
+                'instrucoes' => $config->deposito_instrucoes,
+            ],
         ]);
     }
 }

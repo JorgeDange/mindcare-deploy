@@ -457,6 +457,8 @@
         }
 
         const dados = coordenadasPagamento.dados_bancarios;
+        const multicaixa = coordenadasPagamento.multicaixa || {};
+        const deposito = coordenadasPagamento.deposito || {};
         let html = '';
 
         switch (metodo) {
@@ -474,6 +476,12 @@
                         <span class="text-sm font-medium text-gray-600">Banco</span>
                         <span class="font-bold text-[#111827]">${dados.banco || '—'}</span>
                     </div>
+                    ${dados.conta ? `
+                    <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-[#D1E6E6]">
+                        <span class="text-sm font-medium text-gray-600">Nº Conta</span>
+                        <span class="font-mono font-bold text-[#065F5C]">${dados.conta}</span>
+                    </div>
+                    ` : ''}
                     ${dados.referencia ? `
                     <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-[#D1E6E6]">
                         <span class="text-sm font-medium text-gray-600">Referência</span>
@@ -497,7 +505,18 @@
                         <span class="text-sm font-medium text-gray-600">Banco</span>
                         <span class="font-bold text-[#111827]">${dados.banco || '—'}</span>
                     </div>
-                    <p class="text-sm text-gray-600 mt-2 italic">Faça o depósito e envie o comprovativo.</p>
+                    ${dados.conta ? `
+                    <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-[#D1E6E6]">
+                        <span class="text-sm font-medium text-gray-600">Nº Conta</span>
+                        <span class="font-mono font-bold text-[#065F5C]">${dados.conta}</span>
+                    </div>
+                    ` : ''}
+                    ${deposito.instrucoes ? `
+                    <div class="p-3 bg-white rounded-lg border border-[#D1E6E6]">
+                        <span class="text-sm font-medium text-gray-600">Instruções</span>
+                        <p class="text-sm text-[#065F5C] mt-1">${deposito.instrucoes}</p>
+                    </div>
+                    ` : ''}
                 `;
                 break;
                 
@@ -507,10 +526,18 @@
                         <span class="text-sm font-medium text-gray-600">Multicaixa Express</span>
                         <p class="text-sm text-[#065F5C] mt-1">Faça a transferência via Multicaixa Express e envie o comprovativo.</p>
                     </div>
+                    ${multicaixa.referencia ? `
                     <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-[#D1E6E6]">
                         <span class="text-sm font-medium text-gray-600">Referência</span>
-                        <span class="font-mono font-bold text-[#065F5C]">${dados.referencia || 'Use o seu número de telefone'}</span>
+                        <span class="font-mono font-bold text-[#065F5C]">${multicaixa.referencia}</span>
                     </div>
+                    ` : ''}
+                    ${multicaixa.telefone ? `
+                    <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-[#D1E6E6]">
+                        <span class="text-sm font-medium text-gray-600">Telefone</span>
+                        <span class="font-mono font-bold text-[#065F5C]">${multicaixa.telefone}</span>
+                    </div>
+                    ` : ''}
                 `;
                 break;
                 
