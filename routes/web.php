@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatbotController;
+use App\Http\Controllers\ConfiguracaoPublicaController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Portal\NotificacaoController;
 use App\Http\Controllers\PortalController;
@@ -40,6 +41,7 @@ Route::middleware(['auth', 'verified', 'role:paciente', '2fa'])->prefix('portal'
     Route::get('/plano', [PortalController::class, 'plano'])->name('plano');
     Route::post('/plano/aderir', [PortalController::class, 'aderirPlano'])->name('portal.plano.aderir')->middleware('throttle:uploads');
     Route::post('/plano/trocar', [PortalController::class, 'trocarPlano'])->name('portal.plano.trocar')->middleware('throttle:uploads');
+    Route::get('/pagamento-coordenadas', [ConfiguracaoPublicaController::class, 'coordenadas'])->name('portal.pagamento.coordenadas');
     Route::get('/ficha', [PortalController::class, 'ficha'])->name('ficha');
     Route::put('/ficha', [PortalController::class, 'updateFicha'])->name('portal.ficha.update');
 

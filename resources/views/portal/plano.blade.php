@@ -316,11 +316,25 @@
                     <section class="space-y-4">
                         <label class="font-label-md text-label-md text-primary uppercase tracking-wider block">Passo 2: Método de Pagamento</label>
                         <div class="relative">
-                            <select name="metodo" class="w-full h-12 px-4 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface focus:ring-2 focus:ring-secondary focus:border-secondary outline-none appearance-none font-body-md cursor-pointer transition-all" required>
-                                <option value="transferencia_bancaria" selected>Transferência Bancária</option>
+                            <select name="metodo" id="select-metodo-pagamento" class="w-full h-12 px-4 rounded-lg border border-outline-variant bg-surface-container-lowest text-on-surface focus:ring-2 focus:ring-secondary focus:border-secondary outline-none appearance-none font-body-md cursor-pointer transition-all" required>
+                                <option value="">Selecione o método</option>
+                                <option value="transferencia_bancaria">Transferência Bancária (IBAN)</option>
+                                <option value="deposito">Depósito em Conta</option>
+                                <option value="multicaixa">Multicaixa Express</option>
                             </select>
                             <div class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
                                 <span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+                            </div>
+                        </div>
+
+                        <!-- Coordenadas de Pagamento -->
+                        <div id="coordenadas-pagamento" class="hidden mt-4 p-5 bg-[#F2F8F8] rounded-xl border border-[#D1E6E6]">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="material-symbols-outlined text-[#065F5C]">account_balance</span>
+                                <h5 class="font-bold text-[#065F5C]">Dados para Pagamento</h5>
+                            </div>
+                            <div id="coordenadas-conteudo" class="space-y-3">
+                                <!-- Preenchido via JavaScript -->
                             </div>
                         </div>
                     </section>
@@ -387,6 +401,126 @@
 
 <script>
     const temSubscricao = @json($temSubscricao);
+    let coordenadasPagamento = null;
+
+    // Buscar coordenadas de pagamento ao carregar a página
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('{{ route("portal.pagamento.coordenadas") }}', {
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            coordenadasPagamento = data;
+            atualizarMetodosDisponiveis(data.metodos_pagamento);
+        })
+        .catch(error => {
+            console.error('Erro ao buscar coordenadas:', error);
+        });
+    });
+
+    function atualizarMetodosDisponiveis(metodos) {
+        const select = document.getElementById('select-metodo-pagamento');
+        const options = select.options;
+        
+        for (let i = 0; i < options.length; i++) {
+            const option = options[i];
+            if (option.value === '') continue;
+            
+            const metodoAtivo = metodos[option.value] === true;
+            option.disabled = !metodoAtivo;
+            option.style.display = metodoAtivo ? 'block' : 'none';
+        }
+        
+        // Se só há um método ativo, selecionar automaticamente
+        const metodosAtivos = Object.keys(metodos).filter(k => metodos[k] === true);
+        if (metodosAtivos.length === 1) {
+            select.value = metodosAtivos[0];
+            mostrarCoordenadas(metodosAtivos[0]);
+        }
+    }
+
+    // Evento de mudança no select
+    document.getElementById('select-metodo-pagamento').addEventListener('change', function() {
+        mostrarCoordenadas(this.value);
+    });
+
+    function mostrarCoordenadas(metodo) {
+        const container = document.getElementById('coordenadas-pagamento');
+        const conteudo = document.getElementById('coordenadas-conteudo');
+        
+        if (!metodo || !coordenadasPagamento) {
+            container.classList.add('hidden');
+            return;
+        }
+
+        const dados = coordenadasPagamento.dados_bancarios;
+        let html = '';
+
+        switch (metodo) {
+            case 'transferencia_bancaria':
+                html = `
+                    <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-[#D1E6E6]">
+                        <span class="text-sm font-medium text-gray-600">IBAN</span>
+                        <span class="font-mono font-bold text-[#065F5C]">${dados.iban || '—'}</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-[#D1E6E6]">
+                        <span class="text-sm font-medium text-gray-600">Titular</span>
+                        <span class="font-bold text-[#111827]">${dados.titular || '—'}</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-[#D1E6E6]">
+                        <span class="text-sm font-medium text-gray-600">Banco</span>
+                        <span class="font-bold text-[#111827]">${dados.banco || '—'}</span>
+                    </div>
+                    ${dados.referencia ? `
+                    <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-[#D1E6E6]">
+                        <span class="text-sm font-medium text-gray-600">Referência</span>
+                        <span class="font-mono font-bold text-[#065F5C]">${dados.referencia}</span>
+                    </div>
+                    ` : ''}
+                `;
+                break;
+                
+            case 'deposito':
+                html = `
+                    <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-[#D1E6E6]">
+                        <span class="text-sm font-medium text-gray-600">IBAN</span>
+                        <span class="font-mono font-bold text-[#065F5C]">${dados.iban || '—'}</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-[#D1E6E6]">
+                        <span class="text-sm font-medium text-gray-600">Titular</span>
+                        <span class="font-bold text-[#111827]">${dados.titular || '—'}</span>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-[#D1E6E6]">
+                        <span class="text-sm font-medium text-gray-600">Banco</span>
+                        <span class="font-bold text-[#111827]">${dados.banco || '—'}</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-2 italic">Faça o depósito e envie o comprovativo.</p>
+                `;
+                break;
+                
+            case 'multicaixa':
+                html = `
+                    <div class="p-3 bg-white rounded-lg border border-[#D1E6E6]">
+                        <span class="text-sm font-medium text-gray-600">Multicaixa Express</span>
+                        <p class="text-sm text-[#065F5C] mt-1">Faça a transferência via Multicaixa Express e envie o comprovativo.</p>
+                    </div>
+                    <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-[#D1E6E6]">
+                        <span class="text-sm font-medium text-gray-600">Referência</span>
+                        <span class="font-mono font-bold text-[#065F5C]">${dados.referencia || 'Use o seu número de telefone'}</span>
+                    </div>
+                `;
+                break;
+                
+            default:
+                html = '<p class="text-sm text-gray-600">Selecione um método para ver as instruções.</p>';
+        }
+
+        conteudo.innerHTML = html;
+        container.classList.remove('hidden');
+    }
 
     function abrirAdesaoOuTroca(id, nome, preco) {
         document.getElementById('input-plano-id').value = id;
