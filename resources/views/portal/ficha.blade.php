@@ -299,15 +299,14 @@
                 
                 <div class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_12px_rgba(0,0,0,0.05)] overflow-hidden">
                     <div class="grid grid-cols-12 gap-4 px-stack-md py-4 bg-surface-container-low text-label-md text-on-surface-variant font-bold uppercase tracking-wider hidden md:grid">
-                        <div class="col-span-7">Nome do Arquivo</div>
+                        <div class="col-span-9">Nome do Arquivo</div>
                         <div class="col-span-3">Data</div>
-                        <div class="col-span-2 text-right">Ações</div>
                     </div>
                     
                     <div class="divide-y divide-surface-variant">
                         @forelse($paciente->documentos as $documento)
                             <div class="grid grid-cols-1 md:grid-cols-12 gap-4 px-stack-md py-4 items-center hover:bg-surface-container/30 transition-colors group cursor-pointer">
-                                <div class="md:col-span-7 flex items-center gap-4">
+                                <div class="md:col-span-9 flex items-center gap-4">
                                     <div class="w-10 h-10 bg-primary-container text-on-primary-container rounded-lg flex items-center justify-center shrink-0">
                                         <span class="material-symbols-outlined">description</span>
                                     </div>
@@ -318,11 +317,6 @@
                                 </div>
                                 <div class="md:col-span-3 text-body-sm text-on-surface-variant">
                                     {{ $documento->created_at->format('d de F, Y') }}
-                                </div>
-                                <div class="md:col-span-2 flex justify-end gap-2 md:opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <a href="{{ route('portal.documento.preview', $documento) }}" target="_blank" class="w-9 h-9 hover:bg-surface-container rounded-full flex items-center justify-center text-primary" title="Visualizar">
-                                        <span class="material-symbols-outlined text-[18px]">visibility</span>
-                                    </a>
                                 </div>
                             </div>
                         @empty
