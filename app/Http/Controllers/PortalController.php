@@ -177,8 +177,12 @@ class PortalController extends Controller
 
         $nomeSeguro = \Illuminate\Support\Str::ascii($documento->nome);
         $nomeSeguro = preg_replace('/[^A-Za-z0-9_\-\.]/', '_', $nomeSeguro);
+        $extensao = strtolower($documento->tipo ?? 'pdf');
+        $nomeCompleto = $nomeSeguro . '.' . $extensao;
 
-        return Storage::download($documento->caminho, $nomeSeguro);
+        return Storage::download($documento->caminho, $nomeCompleto, [
+            'Content-Type' => 'application/pdf',
+        ]);
     }
 
     public function previewDocumento(Documento $documento)

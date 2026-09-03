@@ -390,7 +390,14 @@ class ProfissionalController extends Controller
             return back()->with('error', 'Ficheiro não encontrado no servidor.');
         }
 
-        return Storage::download($documento->caminho, $documento->nome);
+        $nomeSeguro = \Illuminate\Support\Str::ascii($documento->nome);
+        $nomeSeguro = preg_replace('/[^A-Za-z0-9_\-\.]/', '_', $nomeSeguro);
+        $extensao = strtolower($documento->tipo ?? 'pdf');
+        $nomeCompleto = $nomeSeguro . '.' . $extensao;
+
+        return Storage::download($documento->caminho, $nomeCompleto, [
+            'Content-Type' => 'application/pdf',
+        ]);
     }
 
     public function perfil()
