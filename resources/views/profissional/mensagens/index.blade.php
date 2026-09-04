@@ -7,7 +7,12 @@
     <!-- Sidebar de Conversas -->
     <div class="chat-sidebar">
         <div class="chat-sidebar-header">
-            <h2 class="chat-sidebar-title">Conversas</h2>
+            <div class="flex items-center justify-between mb-3">
+                <h2 class="chat-sidebar-title" style="margin: 0;">Conversas</h2>
+                <a href="{{ route('profissional.mensagens.nova') }}" class="w-9 h-9 bg-primary text-on-primary rounded-full flex items-center justify-center hover:opacity-90 transition-all" title="Nova Conversa">
+                    <span class="material-symbols-outlined text-[20px]">add</span>
+                </a>
+            </div>
             <div class="chat-search">
                 <span class="material-symbols-outlined" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #6e7979;">search</span>
                 <input type="text" placeholder="Pesquisar..." style="width: 100%; padding: 8px 12px 8px 36px; border: 1px solid #e5e7eb; border-radius: 999px; font-size: 0.85rem; outline: none; background: #f9fafb;">

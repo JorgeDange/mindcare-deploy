@@ -20,6 +20,8 @@ Route::middleware(['auth', 'verified', 'role:profissional', '2fa'])->prefix('pro
     Route::get('/documentos/{documento}/download', [ProfissionalController::class, 'downloadDocumento'])->name('documentos.download');
 
     Route::get('/mensagens', [ProfissionalController::class, 'mensagens'])->name('mensagens.index');
+    Route::get('/mensagens/nova', [ProfissionalController::class, 'novaConversa'])->name('mensagens.nova');
+    Route::post('/mensagens/nova', [ProfissionalController::class, 'storeConversa'])->name('mensagens.nova.store');
     Route::post('/mensagens', [ProfissionalController::class, 'storeMensagem'])->name('mensagens.store')->middleware('throttle:mensagens');
     Route::get('/mensagens/{conversa}/novas', [ProfissionalController::class, 'novasMensagens'])->name('mensagens.novas');
 

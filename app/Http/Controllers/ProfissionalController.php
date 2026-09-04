@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Concerns\HasMessaging;
+use App\Models\Conversa;
 use App\Models\Consulta;
 use App\Models\Documento;
 use App\Models\Mensagem;
@@ -405,6 +406,48 @@ class ProfissionalController extends Controller
         $user = Auth::user();
 
         return view('profissional.perfil', compact('user'));
+    }
+
+    public function novaConversa()
+    {
+        $profissional = $this->getProfissional();
+        $pacientes = Paciente::where('profissional_id', $profissional->id)
+            ->with('user')
+            ->get();
+
+        return view('profissional.mensagens.nova', compact('pacientes'));
+    }
+
+    public function storeConversa(Request $request)
+    {
+        $validated = $request->validate([
+            'paciente_id' => 'required|exists:pacientes,id',
+        ]);
+
+        $profissional = $this->getProfissional();
+        $paciente = Paciente::findOrFail($validated['paciente_id']);
+        abort_if($paciente->profissional_id !== $profissional->id, 403);
+
+        $conversaExistente = Conversa::where('profissional_id', $profissional->id)
+            ->where('paciente_id', $paciente->id)
+            ->first();
+
+        if ($conversaExistente) {
+            return redirect()
+                ->route('profissional.mensagens.index', ['conversa' => $conversaExistente->id])
+                ->with('info', 'Ja existe uma conversa com este paciente.');
+        }
+
+        $conversa = Conversa::create([
+            'profissional_id' => $profissional->id,
+            'paciente_id' => $paciente->id,
+            'contacto' => $paciente->user->name ?? 'Paciente',
+            'iniciais' => strtoupper(substr($paciente->user->name ?? 'P', 0, 1)),
+        ]);
+
+        return redirect()
+            ->route('profissional.mensagens.index', ['conversa' => $conversa->id])
+            ->with('success', 'Conversa criada com sucesso.');
     }
 
     protected function getMessagingOwner(): mixed
