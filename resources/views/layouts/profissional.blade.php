@@ -486,6 +486,27 @@
             })
             .catch(() => {});
         }, 15000);
+
+        // Message badge polling
+        setInterval(() => {
+            fetch('{{ route('profissional.mensagens.nao-lidas') }}', {
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(r => r.json())
+            .then(data => {
+                const msgBadge = document.querySelector('a[href="{{ route('profissional.mensagens.index') }}"] .bg-error');
+                if (msgBadge) {
+                    msgBadge.style.display = data.total > 0 ? 'flex' : 'none';
+                    msgBadge.textContent = data.total;
+                }
+                const mobileMsgBadge = document.querySelector('a[href="{{ route('profissional.mensagens.index') }}"] span.bg-error');
+                if (mobileMsgBadge) {
+                    mobileMsgBadge.style.display = data.total > 0 ? 'flex' : 'none';
+                    mobileMsgBadge.textContent = data.total;
+                }
+            })
+            .catch(() => {});
+        }, 5000);
     </script>
     <x-loading-overlay />
 

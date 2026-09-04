@@ -614,4 +614,15 @@ class PortalController extends Controller
     {
         return 'mensagens';
     }
+
+    public function mensagensNaoLidas()
+    {
+        $paciente = $this->getPaciente();
+        $total = \App\Models\Mensagem::whereHas('conversa', fn ($q) => $q->where('paciente_id', $paciente->id))
+            ->where('remetente_id', '!=', Auth::id())
+            ->where('lida', false)
+            ->count();
+
+        return response()->json(['total' => $total]);
+    }
 }

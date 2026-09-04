@@ -38,6 +38,7 @@ Route::middleware(['auth', 'verified', 'role:paciente', '2fa'])->prefix('portal'
     Route::get('/mensagens', [PortalController::class, 'mensagens'])->name('mensagens');
     Route::post('/mensagens', [PortalController::class, 'storeMensagem'])->name('portal.mensagens.store')->middleware('throttle:mensagens');
     Route::get('/mensagens/{conversa}/novas', [PortalController::class, 'novasMensagens'])->name('portal.mensagens.novas');
+    Route::get('/mensagens/nao-lidas', [PortalController::class, 'mensagensNaoLidas'])->name('portal.mensagens.nao-lidas');
     Route::get('/plano', [PortalController::class, 'plano'])->name('plano');
     Route::post('/plano/aderir', [PortalController::class, 'aderirPlano'])->name('portal.plano.aderir')->middleware('throttle:uploads');
     Route::post('/plano/trocar', [PortalController::class, 'trocarPlano'])->name('portal.plano.trocar')->middleware('throttle:uploads');

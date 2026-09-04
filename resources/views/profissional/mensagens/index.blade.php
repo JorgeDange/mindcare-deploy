@@ -356,7 +356,7 @@ function removerAnexo() {
 }
 
 function startPolling() {
-    pollInterval = setInterval(fetchNovasMensagens, 5000);
+    pollInterval = setInterval(fetchNovasMensagens, 3000);
 }
 
 function fetchNovasMensagens() {

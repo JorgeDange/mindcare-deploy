@@ -316,6 +316,27 @@
             })
             .catch(() => {});
         }, 15000);
+
+        // Polling de mensagens não lidas a cada 5s
+        setInterval(() => {
+            fetch('{{ route('portal.mensagens.nao-lidas') }}', {
+                headers: { 'Accept': 'application/json' }
+            })
+            .then(r => r.json())
+            .then(data => {
+                const msgBadge = document.querySelector('.sidebar-msg-badge');
+                if (msgBadge) {
+                    msgBadge.style.display = data.total > 0 ? 'flex' : 'none';
+                    msgBadge.textContent = data.total;
+                }
+                const mobileMsgIcon = document.querySelector('a[href="{{ route('mensagens') }}"] .bg-error');
+                if (mobileMsgIcon) {
+                    mobileMsgIcon.style.display = data.total > 0 ? 'flex' : 'none';
+                    mobileMsgIcon.textContent = data.total;
+                }
+            })
+            .catch(() => {});
+        }, 5000);
     </script>
     <x-loading-overlay />
 

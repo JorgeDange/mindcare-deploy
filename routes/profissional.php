@@ -24,6 +24,7 @@ Route::middleware(['auth', 'verified', 'role:profissional', '2fa'])->prefix('pro
     Route::post('/mensagens/nova', [ProfissionalController::class, 'storeConversa'])->name('mensagens.nova.store');
     Route::post('/mensagens', [ProfissionalController::class, 'storeMensagem'])->name('mensagens.store')->middleware('throttle:mensagens');
     Route::get('/mensagens/{conversa}/novas', [ProfissionalController::class, 'novasMensagens'])->name('mensagens.novas');
+    Route::get('/mensagens/nao-lidas', [ProfissionalController::class, 'mensagensNaoLidas'])->name('mensagens.nao-lidas');
 
     Route::get('/perfil', [ProfissionalController::class, 'perfil'])->name('perfil');
 

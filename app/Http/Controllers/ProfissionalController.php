@@ -455,6 +455,17 @@ class ProfissionalController extends Controller
             ->with('success', 'Conversa criada com sucesso.');
     }
 
+    public function mensagensNaoLidas()
+    {
+        $profissional = $this->getProfissional();
+        $total = \App\Models\Mensagem::whereHas('conversa', fn ($q) => $q->where('profissional_id', $profissional->id))
+            ->where('remetente_id', '!=', Auth::id())
+            ->where('lida', false)
+            ->count();
+
+        return response()->json(['total' => $total]);
+    }
+
     protected function getMessagingOwner(): mixed
     {
         return $this->getProfissional();
