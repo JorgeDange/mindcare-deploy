@@ -6,7 +6,7 @@
     <div class="carousel-wrapper">
         <!-- SLIDE 1 -->
         <div class="mc-slide">
-            <img src="{{ asset('assets/Consultoria2 - Cópia.jpg') }}" class="carousel-img" alt="Slide 1">
+            <img src="{{ asset('assets/Consultoria2 - Cópia.jpg') }}" class="carousel-img" alt="Slide 1" loading="eager" fetchpriority="high">
             <div class="hero-overlay-layer"></div>
             <div class="hero-content">
                 <div class="badge-tag">
