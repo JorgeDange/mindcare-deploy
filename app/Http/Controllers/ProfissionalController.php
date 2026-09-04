@@ -194,6 +194,11 @@ class ProfissionalController extends Controller
         if ($validated['estado'] === 'confirmada') {
             $consulta->update(['confirmada' => true]);
             $consulta->load('paciente.user');
+
+            if ($consulta->paciente && ! $consulta->paciente->profissional_id) {
+                $consulta->paciente->update(['profissional_id' => $this->getProfissional()->id]);
+            }
+
             $consulta->paciente?->user?->notify(new ConsultaConfirmada($consulta));
 
             activity('consultas')
