@@ -3,333 +3,203 @@
 @section('title', 'Mensagens — Profissional')
 
 @section('content')
-<div class="chat-page-wrapper" style="height: calc(100vh - 7rem);">
-    <!-- Sidebar de Conversas -->
-    <div class="chat-sidebar">
-        <div class="chat-sidebar-header">
-            <div class="flex items-center justify-between mb-3">
-                <h2 class="chat-sidebar-title" style="margin: 0;">Conversas</h2>
-                <a href="{{ route('profissional.mensagens.nova') }}" class="w-9 h-9 bg-primary text-on-primary rounded-full flex items-center justify-center hover:opacity-90 transition-all" title="Nova Conversa">
-                    <span class="material-symbols-outlined text-[20px]">add</span>
-                </a>
-            </div>
-            <div class="chat-search">
-                <span class="material-symbols-outlined" style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 18px; color: #6e7979;">search</span>
-                <input type="text" placeholder="Pesquisar..." style="width: 100%; padding: 8px 12px 8px 36px; border: 1px solid #e5e7eb; border-radius: 999px; font-size: 0.85rem; outline: none; background: #f9fafb;">
-            </div>
+<section class="flex h-full p-stack-md gap-stack-md overflow-hidden bg-surface-container-low">
+    
+    <!-- Contact List Column -->
+    <div class="w-full md:w-1/3 bg-white rounded-2xl shadow-sm flex-col border border-outline-variant/30 overflow-hidden {{ $conversaActiva ? 'hidden md:flex' : 'flex' }}">
+        <div class="p-4 border-b border-outline-variant/20 flex items-center justify-between">
+            <h2 class="font-title-lg text-title-lg text-on-surface">Conversas</h2>
+            <a href="{{ route('profissional.mensagens.nova') }}" class="w-10 h-10 bg-primary text-on-primary rounded-full flex items-center justify-center hover:opacity-90 transition-all shadow-sm" title="Nova Conversa">
+                <span class="material-symbols-outlined text-[20px]">add</span>
+            </a>
         </div>
-
-        <div class="chat-list">
+        
+        <div class="flex-1 overflow-y-auto chat-scroll divide-y divide-outline-variant/10">
             @forelse($conversas as $conversa)
-            @php
-                $ultimaMsg = $conversa->mensagens->first();
-                $naoLidas = $conversa->nao_lidas;
-            @endphp
-            <a href="{{ route('profissional.mensagens.index', ['conversa' => $conversa->id]) }}"
-               class="chat-list-item {{ $conversaActiva && $conversaActiva->id === $conversa->id ? 'active' : '' }}"
-               style="text-decoration: none; color: inherit;">
-                <div class="chat-avatar" style="background: {{ $conversaActiva && $conversaActiva->id === $conversa->id ? '' : 'linear-gradient(135deg, #005f5f, #007a7a)' }};">
-                    {{ $conversa->iniciais ?? ($conversa->paciente?->user?->iniciais ?? '?') }}
-                </div>
-                <div class="chat-item-info">
-                    <div class="chat-item-header">
-                        <span class="chat-item-name">{{ $conversa->contacto ?? $conversa->paciente?->user?->name ?? 'Paciente' }}</span>
-                        <span class="chat-item-time">{{ $ultimaMsg ? $ultimaMsg->created_at->diffForHumans() : '' }}</span>
-                    </div>
-                    <div class="chat-item-preview">
-                        {{ $ultimaMsg ? Str::limit($ultimaMsg->texto, 35) : 'Sem mensagens' }}
-                        @if($naoLidas > 0)
-                            <span class="notif-badge" style="position: static; display: inline-flex; margin-left: 8px;">{{ $naoLidas }}</span>
+                @php
+                    $mensagensNaoLidas = $conversa->mensagens
+                        ->where('remetente_id', '!=', Auth::id())
+                        ->where('lida', false)
+                        ->count();
+                    $pacienteUser = $conversa->paciente?->user;
+                @endphp
+                <a href="{{ route('profissional.mensagens.index', ['conversa' => $conversa->id]) }}" 
+                   class="flex items-center gap-4 p-4 transition-colors cursor-pointer {{ $conversaActiva && $conversaActiva->id === $conversa->id ? 'bg-surface-container-high border-l-4 border-primary' : 'hover:bg-surface-container-low' }}">
+                    <div class="relative flex-shrink-0">
+                        @if($pacienteUser && $pacienteUser->foto_perfil)
+                            <img src="{{ asset('storage/' . $pacienteUser->foto_perfil) }}" alt="Paciente" class="h-12 w-12 rounded-full object-cover">
+                        @else
+                            <div class="h-12 w-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm">
+                                {{ $conversa->iniciais ?? ($pacienteUser?->iniciais ?? '?') }}
+                            </div>
+                        @endif
+                        @if($mensagensNaoLidas > 0)
+                            <span class="absolute -top-1 -right-1 bg-error text-on-error font-bold text-[9px] min-w-[16px] h-[16px] rounded-full flex items-center justify-center px-1">
+                                {{ $mensagensNaoLidas }}
+                            </span>
                         @endif
                     </div>
-                </div>
-            </a>
+                    
+                    <div class="flex-1 overflow-hidden">
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-on-surface truncate">{{ $conversa->contacto ?? $pacienteUser?->name ?? 'Paciente' }}</span>
+                            <span class="text-[10px] text-on-surface-variant flex-shrink-0 ml-1">{{ $conversa->mensagens->last() ? $conversa->mensagens->last()->created_at->diffForHumans() : '' }}</span>
+                        </div>
+                        <p class="text-body-sm text-on-surface-variant truncate mt-0.5">
+                            {{ $conversa->mensagens->last() ? Str::limit($conversa->mensagens->last()->texto, 35) : 'Sem mensagens' }}
+                        </p>
+                    </div>
+                </a>
             @empty
-            <p style="padding: 20px; text-align: center; color: #6e7979; font-size: 0.9rem;">Nenhuma conversa activa.</p>
+                <div class="px-4 py-8 text-center text-on-surface-variant text-xs">
+                    <span class="material-symbols-outlined text-3xl opacity-35 mb-2">forum</span>
+                    <p>Nenhuma conversa activa.</p>
+                </div>
             @endforelse
         </div>
     </div>
 
-    <!-- Área de Mensagens -->
-    <div class="chat-main">
+    <!-- Conversation Column (Right) -->
+    <div class="w-full md:flex-grow bg-white rounded-2xl shadow-sm flex-col overflow-hidden border border-outline-variant/30 relative {{ $conversaActiva ? 'flex' : 'hidden md:flex' }}">
         @if($conversaActiva)
-        @php $pacienteUser = $conversaActiva->paciente?->user; @endphp
-        <div class="chat-main-header">
-            <div class="chat-main-header-info">
-                <div class="chat-avatar" style="width: 48px; height: 48px; font-size: 1.1rem; background: linear-gradient(135deg, #005f5f, #007a7a);">
-                    {{ $conversaActiva->iniciais ?? ($pacienteUser?->iniciais ?? '?') }}
+            @php $pacienteUser = $conversaActiva->paciente?->user; @endphp
+            <!-- Chat Header -->
+            <div class="p-4 border-b border-outline-variant/20 flex items-center justify-between bg-white/70 backdrop-blur-md sticky top-0 z-10">
+                <div class="flex items-center gap-2 md:gap-4">
+                    <a href="{{ route('profissional.mensagens.index') }}" class="md:hidden w-10 h-10 -ml-2 hover:bg-surface-container rounded-full text-on-surface-variant flex items-center justify-center">
+                        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+                    </a>
+                    @if($pacienteUser && $pacienteUser->foto_perfil)
+                        <img src="{{ asset('storage/' . $pacienteUser->foto_perfil) }}" alt="Paciente" class="h-10 w-10 rounded-full object-cover">
+                    @else
+                        <div class="h-10 w-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm">
+                            {{ $conversaActiva->iniciais ?? ($pacienteUser?->iniciais ?? '?') }}
+                        </div>
+                    @endif
+                    <div>
+                        <h3 class="font-bold text-on-surface text-sm leading-tight">{{ $conversaActiva->contacto ?? $pacienteUser?->name ?? 'Paciente' }}</h3>
+                        <span class="text-[10px] text-green-600 flex items-center gap-1 mt-0.5" id="chat-status">
+                            <span class="w-1.5 h-1.5 bg-green-600 rounded-full"></span> Online agora
+                        </span>
+                    </div>
                 </div>
-                <div>
-                    <h3 style="margin: 0; font-family: 'DM Sans', sans-serif; font-size: 1.1rem; color: #071e27;">
-                        {{ $conversaActiva->contacto ?? $pacienteUser?->name ?? 'Paciente' }}
-                    </h3>
-                    <span class="chat-header-status" id="chat-status" style="color: #10B981;">● Disponível</span>
+                <div class="flex gap-2">
+                    <a href="{{ route('profissional.mensagens.index', ['conversa' => $conversaActiva->id]) }}" class="w-10 h-10 hover:bg-surface-container rounded-full flex items-center justify-center text-on-surface-variant" title="Actualizar"><span class="material-symbols-outlined text-[20px]">refresh</span></a>
+                    <button class="w-10 h-10 hover:bg-surface-container rounded-full flex items-center justify-center text-primary"><span class="material-symbols-outlined text-[20px]">call</span></button>
+                    <button class="w-10 h-10 hover:bg-surface-container rounded-full flex items-center justify-center text-primary"><span class="material-symbols-outlined text-[20px]">videocam</span></button>
+                    <button class="w-10 h-10 hover:bg-surface-container rounded-full flex items-center justify-center text-on-surface-variant"><span class="material-symbols-outlined text-[20px]">more_vert</span></button>
                 </div>
             </div>
-        </div>
 
-        <div class="chat-messages-area">
-            @php $currentDate = null; @endphp
-            @foreach($conversaActiva->mensagens as $mensagem)
-                @php
-                    $msgDate = $mensagem->created_at->format('d \d\e F \d\e Y');
-                @endphp
-                @if($currentDate !== $msgDate)
-                    <div class="chat-system-msg">{{ $msgDate }}</div>
-                    @php $currentDate = $msgDate; @endphp
-                @endif
+            <!-- Chat Messages Area -->
+            <div class="flex-grow overflow-y-auto chat-scroll p-6 space-y-6 bg-[radial-gradient(#bdc9c8_1px,transparent_1px)] [background-size:24px_24px] bg-fixed chat-messages-area">
+                @php $currentDate = null; @endphp
+                @foreach($conversaActiva->mensagens as $mensagem)
+                    @php
+                        $msgDate = $mensagem->created_at->format('d \d\e F \d\e Y');
+                    @endphp
+                    @if($currentDate !== $msgDate)
+                        <div class="flex justify-center my-4">
+                            <span class="bg-surface-variant text-on-surface-variant px-3 py-1 rounded-full text-[10px] font-medium">{{ $msgDate }}</span>
+                        </div>
+                        @php $currentDate = $msgDate; @endphp
+                    @endif
 
-                <div class="chat-bubble-wrapper {{ $mensagem->remetente_id === Auth::id() ? 'sent' : 'received' }}"
-                     id="msg-{{ $mensagem->id }}">
-                    <div class="chat-bubble {{ $mensagem->remetente_id === Auth::id() ? 'sent' : 'received' }}">
-                        {!! nl2br(e($mensagem->texto)) !!}
-                        @if($mensagem->anexo_path)
-                            @php $borderColor = $mensagem->remetente_id === Auth::id() ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)'; @endphp
-                            <div style="margin-top: 8px; border-top: 1px solid {{ $borderColor }}; padding-top: 8px;">
-                                <a href="{{ Storage::url($mensagem->anexo_path) }}" download
-                                   style="color: inherit; text-decoration: underline; font-size: 0.85rem;">
-                                    <span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle;">attach_file</span> Descarregar Anexo
-                                </a>
+                    @if($mensagem->remetente_id === Auth::id())
+                        <!-- Message Sent -->
+                        <div class="flex items-end gap-3 max-w-[80%] ml-auto flex-row-reverse" id="msg-{{ $mensagem->id }}">
+                            <div class="bg-primary text-on-primary p-4 rounded-2xl rounded-br-none shadow-md text-xs">
+                                <p class="leading-normal">{!! nl2br(e($mensagem->texto)) !!}</p>
+                                @if($mensagem->anexo_path)
+                                    <div class="mt-3 bg-white/10 rounded-lg p-2.5 flex items-center gap-2.5 border border-white/20 hover:bg-white/20 transition-colors cursor-pointer">
+                                        <span class="w-8 h-8 bg-white/10 text-white rounded-lg flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-[18px]">description</span></span>
+                                        <div class="flex-grow min-w-0">
+                                            <a href="{{ Storage::url($mensagem->anexo_path) }}" download class="font-bold text-white truncate block text-[10px] hover:underline">
+                                                {{ basename($mensagem->anexo_path) }}
+                                            </a>
+                                            <p class="text-[8px] text-white/70">Descarregar anexo</p>
+                                        </div>
+                                        <a href="{{ Storage::url($mensagem->anexo_path) }}" download class="material-symbols-outlined text-white text-[18px]">download</a>
+                                    </div>
+                                @endif
+                                <span class="text-[9px] text-primary-fixed/70 block mt-2 text-right">{{ $mensagem->created_at->format('H:i') }}</span>
                             </div>
-                        @endif
-                    </div>
-                    <div class="chat-bubble-time">{{ $mensagem->created_at->format('H:i') }}</div>
-                </div>
-            @endforeach
-        </div>
+                        </div>
+                    @else
+                        <!-- Message Received -->
+                        <div class="flex items-end gap-3 max-w-[80%]" id="msg-{{ $mensagem->id }}">
+                            @if($pacienteUser && $pacienteUser->foto_perfil)
+                                <img src="{{ asset('storage/' . $pacienteUser->foto_perfil) }}" alt="Paciente" class="h-8 w-8 rounded-full object-cover shrink-0 mb-1">
+                            @else
+                                <div class="h-8 w-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-xs shrink-0 mb-1">
+                                    {{ $conversaActiva->iniciais ?? ($pacienteUser?->iniciais ?? '?') }}
+                                </div>
+                            @endif
+                            <div class="bg-white border border-outline-variant/30 p-4 rounded-2xl rounded-bl-none shadow-sm text-xs">
+                                <p class="text-on-surface leading-normal">{!! nl2br(e($mensagem->texto)) !!}</p>
+                                @if($mensagem->anexo_path)
+                                    <div class="mt-3 bg-surface-container rounded-lg p-2.5 flex items-center gap-2.5 border border-outline-variant/20 hover:bg-surface-container-high transition-colors cursor-pointer">
+                                        <span class="w-8 h-8 bg-primary-fixed text-primary rounded-lg flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-[18px]">description</span></span>
+                                        <div class="flex-grow min-w-0">
+                                            <a href="{{ Storage::url($mensagem->anexo_path) }}" download class="font-bold text-on-surface truncate block text-[10px] hover:underline">
+                                                {{ basename($mensagem->anexo_path) }}
+                                            </a>
+                                            <p class="text-[8px] text-on-surface-variant">Descarregar anexo</p>
+                                        </div>
+                                        <a href="{{ Storage::url($mensagem->anexo_path) }}" download class="material-symbols-outlined text-on-surface-variant text-[18px]">download</a>
+                                    </div>
+                                @endif
+                                <span class="text-[9px] text-on-surface-variant block mt-2 text-right">{{ $mensagem->created_at->format('H:i') }}</span>
+                            </div>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
 
-        <form action="{{ route('profissional.mensagens.store') }}" method="POST" enctype="multipart/form-data" class="chat-input-area" style="margin: 0;">
-            @csrf
-            <input type="hidden" name="conversa_id" value="{{ $conversaActiva->id }}">
-            <input type="file" name="anexo" id="input-anexo" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" style="display:none">
-            <button type="button" class="chat-attach-btn" title="Anexar Ficheiro" onclick="document.getElementById('input-anexo').click()">
-                <span class="material-symbols-outlined">attach_file</span>
-            </button>
-            <div class="chat-input-box" style="flex: 1; position: relative;">
-                <div id="anexo-pill" style="display: none; position: absolute; top: -35px; left: 0; background: #dbf1fe; padding: 4px 12px; border-radius: 12px; font-size: 0.8rem; color: #005f5f; border: 1px solid #bae6fd; align-items: center; gap: 8px;">
-                    <span class="material-symbols-outlined" style="font-size: 14px;">attach_file</span> <span id="anexo-nome"></span>
-                    <button type="button" onclick="removerAnexo()" style="background: none; border: none; color: #ba1a1a; cursor: pointer; padding: 0;">
-                        <span class="material-symbols-outlined" style="font-size: 14px;">close</span>
+            <!-- Message Input -->
+            <form action="{{ route('profissional.mensagens.store') }}" method="POST" enctype="multipart/form-data" class="p-4 bg-surface border-t border-outline-variant/20" style="margin: 0;">
+                @csrf
+                <input type="hidden" name="conversa_id" value="{{ $conversaActiva->id }}">
+                <input type="file" name="anexo" id="input-anexo" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" style="display:none">
+                
+                <div class="flex items-end gap-3">
+                    <button type="button" class="w-12 h-12 hover:bg-surface-variant rounded-full flex items-center justify-center text-on-surface-variant" title="Anexar Ficheiro" onclick="document.getElementById('input-anexo').click()"><span class="material-symbols-outlined text-[20px]">attach_file</span></button>
+                    
+                    <div class="flex-1 bg-surface-container rounded-2xl px-4 py-2.5 flex flex-col gap-2 min-h-[48px] justify-center relative">
+                        <div id="anexo-pill" class="hidden bg-primary-container text-on-primary-container px-3 py-1 rounded-full text-xs font-semibold self-start flex items-center gap-1.5">
+                            <span class="material-symbols-outlined text-[14px]">attachment</span>
+                            <span id="anexo-nome" class="max-w-[120px] truncate"></span>
+                            <button type="button" onclick="removerAnexo()" class="text-error font-bold text-xs hover:opacity-85 hover:scale-115 transition-all outline-none">
+                                <span class="material-symbols-outlined text-[14px] align-middle">close</span>
+                            </button>
+                        </div>
+                        <input type="text" name="texto" placeholder="Escreva a sua mensagem..." required class="w-full bg-transparent border-none focus:ring-0 text-body-sm outline-none resize-none p-1">
+                    </div>
+                    
+                    <button type="submit" class="h-12 w-12 bg-primary text-on-primary rounded-full flex items-center justify-center shadow-lg active:scale-95 hover:opacity-90 transition-all">
+                        <span class="material-symbols-outlined">send</span>
                     </button>
                 </div>
-                <input type="text" name="texto" placeholder="Escreva a sua mensagem..." required
-                       style="width: 100%; border: none; background: transparent; outline: none; padding: 12px 0;">
-            </div>
-            <button type="submit" class="chat-send-btn"><span class="material-symbols-outlined">send</span></button>
-        </form>
+            </form>
         @else
-        <div style="display: flex; align-items: center; justify-content: center; height: 100%; flex-direction: column; color: #6e7979;">
-            <span class="material-symbols-outlined" style="font-size: 3rem; margin-bottom: 16px; opacity: 0.5;">forum</span>
-            <p>Seleccione uma conversa para começar a enviar mensagens.</p>
-        </div>
+            <!-- Estado Vazio -->
+            <div class="flex flex-col items-center justify-center h-full text-on-surface-variant p-6">
+                <span class="material-symbols-outlined text-5xl opacity-25 mb-3">chat_bubble</span>
+                <p class="font-semibold text-on-surface text-sm">Nenhuma conversa seleccionada</p>
+                <p class="text-xs mt-1 text-center">Seleccione um paciente na coluna esquerda para iniciar ou prosseguir a conversa.</p>
+            </div>
         @endif
     </div>
-</div>
+</section>
 
-<style>
-.chat-page-wrapper {
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    background: #fff;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid rgba(0, 95, 95, 0.05);
-}
-.chat-sidebar {
-    border-right: 1px solid #f3f4f6;
-    display: flex;
-    flex-direction: column;
-}
-.chat-sidebar-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid #f3f4f6;
-}
-.chat-sidebar-title {
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #005f5f;
-    margin: 0 0 12px;
-}
-.chat-search {
-    position: relative;
-}
-.chat-list {
-    flex: 1;
-    overflow-y: auto;
-}
-.chat-list-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px 20px;
-    cursor: pointer;
-    transition: background 0.15s;
-    border-bottom: 1px solid #f9fafb;
-}
-.chat-list-item:hover,
-.chat-list-item.active {
-    background: #f0f9f6;
-}
-.chat-avatar {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #005f5f, #007a7a);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 0.85rem;
-    flex-shrink: 0;
-    font-family: 'DM Sans', sans-serif;
-}
-.chat-item-info {
-    flex: 1;
-    min-width: 0;
-}
-.chat-item-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.chat-item-name {
-    font-weight: 600;
-    font-size: 0.88rem;
-    color: #005f5f;
-}
-.chat-item-time {
-    font-size: 0.72rem;
-    color: #9ca3af;
-    white-space: nowrap;
-}
-.chat-item-preview {
-    font-size: 0.8rem;
-    color: #9ca3af;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-top: 2px;
-}
-.notif-badge {
-    min-width: 20px;
-    height: 20px;
-    background: #d97706;
-    color: #fff;
-    border-radius: 50%;
-    font-size: 0.68rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.chat-main {
-    display: flex;
-    flex-direction: column;
-}
-.chat-main-header {
-    padding: 16px 24px;
-    border-bottom: 1px solid #f3f4f6;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-.chat-main-header-info {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-.chat-messages-area {
-    flex: 1;
-    padding: 24px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-.chat-bubble-wrapper {
-    max-width: 70%;
-}
-.chat-bubble-wrapper.sent {
-    align-self: flex-end;
-}
-.chat-bubble-wrapper.received {
-    align-self: flex-start;
-}
-.chat-bubble {
-    padding: 12px 18px;
-    border-radius: 16px;
-    font-size: 0.88rem;
-    line-height: 1.5;
-}
-.chat-bubble.sent {
-    background: #005f5f;
-    color: #fff;
-    border-bottom-right-radius: 4px;
-}
-.chat-bubble.received {
-    background: #f3f4f6;
-    color: #1f2937;
-    border-bottom-left-radius: 4px;
-}
-.chat-bubble-time {
-    font-size: 0.7rem;
-    opacity: 0.6;
-    margin-top: 4px;
-}
-.chat-system-msg {
-    text-align: center;
-    font-size: 0.78rem;
-    color: #9ca3af;
-    padding: 8px 0;
-    margin-bottom: 4px;
-}
-.chat-input-area {
-    padding: 16px 24px;
-    border-top: 1px solid #f3f4f6;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-}
-.chat-attach-btn, .chat-send-btn {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    transition: background 0.2s;
-}
-.chat-attach-btn {
-    background: transparent;
-    color: #6e7979;
-}
-.chat-attach-btn:hover {
-    background: #f3f4f6;
-}
-.chat-send-btn {
-    background: #005f5f;
-    color: #fff;
-}
-.chat-send-btn:hover {
-    background: #004f4f;
-}
-.chat-header-status {
-    font-size: 0.8rem;
-}
-</style>
-
-@push('scripts')
 <script>
 let pollInterval;
 let failCount = 0;
 let lastPollTime = Math.floor(Date.now() / 1000);
 const conversaId = {{ $conversaActiva ? $conversaActiva->id : 'null' }};
 const currentUserId = {{ Auth::id() }};
+const pacienteAvatarUrl = @json($conversaActiva && $pacienteUser && $pacienteUser->foto_perfil ? asset('storage/' . $pacienteUser->foto_perfil) : null);
+const pacienteInitials = @json($conversaActiva ? ($conversaActiva->iniciais ?? ($pacienteUser?->iniciais ?? '?')) : '?');
 
 document.addEventListener('DOMContentLoaded', () => {
     const area = document.querySelector('.chat-messages-area');
@@ -340,7 +210,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inputAnexo.addEventListener('change', function() {
             if (this.files && this.files.length > 0) {
                 document.getElementById('anexo-nome').textContent = this.files[0].name;
-                document.getElementById('anexo-pill').style.display = 'flex';
+                document.getElementById('anexo-pill').classList.remove('hidden');
             }
         });
     }
@@ -352,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function removerAnexo() {
     document.getElementById('input-anexo').value = '';
-    document.getElementById('anexo-pill').style.display = 'none';
+    document.getElementById('anexo-pill').classList.add('hidden');
 }
 
 function startPolling() {
@@ -371,10 +241,10 @@ function fetchNovasMensagens() {
             failCount = 0;
             const statusEl = document.getElementById('chat-status');
             if (statusEl) {
-                statusEl.textContent = '● Disponível';
-                statusEl.style.color = '#10B981';
+                statusEl.innerHTML = '<span class="w-1.5 h-1.5 bg-green-600 rounded-full"></span> Online agora';
+                statusEl.style.color = '';
             }
-
+            
             if (data.mensagens && data.mensagens.length > 0) {
                 appendMessages(data.mensagens);
             }
@@ -385,7 +255,7 @@ function fetchNovasMensagens() {
             if (failCount >= 3) {
                 const statusEl = document.getElementById('chat-status');
                 if (statusEl) {
-                    statusEl.textContent = '○ Indisponível';
+                    statusEl.innerHTML = '<span class="w-1.5 h-1.5 bg-gray-400 rounded-full"></span> Indisponível';
                     statusEl.style.color = '#9CA3AF';
                 }
             }
@@ -396,41 +266,71 @@ function appendMessages(mensagens) {
     const area = document.querySelector('.chat-messages-area');
     if (!area) return;
     let shouldScroll = false;
-
+    
     mensagens.forEach(msg => {
         if (document.getElementById('msg-' + msg.id)) return;
-
+        
         shouldScroll = true;
         const isSent = msg.remetente_id === currentUserId;
-
+        
         const wrapper = document.createElement('div');
-        wrapper.className = isSent ? 'chat-bubble-wrapper sent' : 'chat-bubble-wrapper received';
         wrapper.id = 'msg-' + msg.id;
-
+        
         let anexoHtml = '';
         if (msg.anexo_url) {
-            const borderTopColor = isSent ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)';
-            anexoHtml = `
-                <div style="margin-top: 8px; border-top: 1px solid ${borderTopColor}; padding-top: 8px;">
-                    <a href="${msg.anexo_url}" download style="color: inherit; text-decoration: underline; font-size: 0.85rem;">
-                        <span class="material-symbols-outlined" style="font-size: 14px; vertical-align: middle;">attach_file</span> Descarregar Anexo
-                    </a>
+            if (isSent) {
+                anexoHtml = `
+                    <div class="mt-3 bg-white/10 rounded-lg p-2.5 flex items-center gap-2.5 border border-white/20 hover:bg-white/20 transition-colors cursor-pointer">
+                        <span class="material-symbols-outlined text-white bg-white/10 p-1.5 rounded-lg text-[18px]">description</span>
+                        <div class="flex-grow min-w-0">
+                            <a href="${msg.anexo_url}" download class="font-bold text-white truncate block text-[10px] hover:underline">${msg.anexo_url.split('/').pop()}</a>
+                            <p class="text-[8px] text-white/70">Descarregar anexo</p>
+                        </div>
+                        <a href="${msg.anexo_url}" download class="material-symbols-outlined text-white text-[18px]">download</a>
+                    </div>
+                `;
+            } else {
+                anexoHtml = `
+                    <div class="mt-3 bg-surface-container rounded-lg p-2.5 flex items-center gap-2.5 border border-outline-variant/20 hover:bg-surface-container-high transition-colors cursor-pointer">
+                        <span class="material-symbols-outlined text-primary bg-primary-fixed p-1.5 rounded-lg text-[18px]">description</span>
+                        <div class="flex-grow min-w-0">
+                            <a href="${msg.anexo_url}" download class="font-bold text-on-surface truncate block text-[10px] hover:underline">${msg.anexo_url.split('/').pop()}</a>
+                            <p class="text-[8px] text-on-surface-variant">Descarregar anexo</p>
+                        </div>
+                        <a href="${msg.anexo_url}" download class="material-symbols-outlined text-on-surface-variant text-[18px]">download</a>
+                    </div>
+                `;
+            }
+        }
+        
+        if (isSent) {
+            wrapper.className = 'flex items-end gap-3 max-w-[80%] ml-auto flex-row-reverse';
+            wrapper.innerHTML = `
+                <div class="bg-primary text-on-primary p-4 rounded-2xl rounded-br-none shadow-md text-xs">
+                    <p class="leading-normal">${msg.texto}</p>
+                    ${anexoHtml}
+                    <span class="text-[9px] text-primary-fixed/70 block mt-2 text-right">${msg.hora}</span>
+                </div>
+            `;
+        } else {
+            wrapper.className = 'flex items-end gap-3 max-w-[80%]';
+            let avatarHtml = pacienteAvatarUrl 
+                ? `<img src="${pacienteAvatarUrl}" alt="Paciente" class="h-8 w-8 rounded-full object-cover shrink-0 mb-1">`
+                : `<div class="h-8 w-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-xs shrink-0 mb-1">${pacienteInitials}</div>`;
+                
+            wrapper.innerHTML = `
+                ${avatarHtml}
+                <div class="bg-white border border-outline-variant/30 p-4 rounded-2xl rounded-bl-none shadow-sm text-xs">
+                    <p class="text-on-surface leading-normal">${msg.texto}</p>
+                    ${anexoHtml}
+                    <span class="text-[9px] text-on-surface-variant block mt-2 text-right">${msg.hora}</span>
                 </div>
             `;
         }
-
-        const bubbleClass = isSent ? 'sent' : 'received';
-        wrapper.innerHTML = `
-            <div class="chat-bubble ${bubbleClass}">
-                ${msg.texto}
-                ${anexoHtml}
-            </div>
-            <div class="chat-bubble-time">${msg.hora}</div>
-        `;
-
+        
         area.appendChild(wrapper);
     });
-
+    
     if (shouldScroll) {
         area.scrollTop = area.scrollHeight;
     }
@@ -440,5 +340,4 @@ window.addEventListener('beforeunload', () => {
     if (pollInterval) clearInterval(pollInterval);
 });
 </script>
-@endpush
 @endsection
