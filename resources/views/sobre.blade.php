@@ -160,7 +160,7 @@
 
             <div class="item">
                 <div class="icon_c">
-                    <img src="{{ asset('assets/social.png') }}" alt="">
+                    <img src="{{ asset('assets/social.png') }}" alt="" loading="lazy" decoding="async">
                 </div>
                 <div class="texto">
                     <h3>Indivíduos</h3>
@@ -174,7 +174,7 @@
 
             <div class="item">
                 <div class="icon_c">
-                    <img src="{{ asset('assets/family.png') }}" alt="">
+                    <img src="{{ asset('assets/family.png') }}" alt="" loading="lazy" decoding="async">
                 </div>
                 <div class="texto">
                     <h3>Famílias</h3>
@@ -187,7 +187,7 @@
 
             <div class="item">
                 <div class="icon_c">
-                    <img src="{{ asset('assets/comunity.png') }}" alt="">
+                    <img src="{{ asset('assets/comunity.png') }}" alt="" loading="lazy" decoding="async">
                 </div>
                 <div class="texto">
                     <h3>Estudantes e Profissionais</h3>
@@ -200,7 +200,7 @@
 
             <div class="item">
                 <div class="icon_c">
-                    <img src="{{ asset('assets/enity.png') }}" alt="">
+                    <img src="{{ asset('assets/enity.png') }}" alt="" loading="lazy" decoding="async">
                 </div>
                 <div class="texto">
                     <h3>Organizações</h3>
@@ -222,7 +222,7 @@
             <!-- 1 -->
             <div class="team-card">
                 <div class="team-img-wrapper">
-                    <img src="{{ asset('assets/js.png') }}" alt="Joyceline Vatuva">
+                    <img src="{{ asset('assets/js.png') }}" alt="Joyceline Vatuva" loading="lazy" decoding="async">
                 </div>
                 <div class="team-info">
                     <h3>Joyceline Vatuva</h3>
@@ -232,7 +232,7 @@
             <!-- 2 -->
             <div class="team-card">
                 <div class="team-img-wrapper">
-                    <img src="{{ asset('assets/pl.jpg') }}" alt="Priscilla Lima">
+                    <img src="{{ asset('assets/pl.jpg') }}" alt="Priscilla Lima" loading="lazy" decoding="async">
                 </div>
                 <div class="team-info">
                     <h3>Priscilla Lima</h3>
@@ -242,7 +242,7 @@
             <!-- 3 -->
             <div class="team-card">
                 <div class="team-img-wrapper">
-                    <img src="{{ asset('assets/sb.png') }}" alt="Isabel Fernandes">
+                    <img src="{{ asset('assets/sb.png') }}" alt="Isabel Fernandes" loading="lazy" decoding="async">
                 </div>
                 <div class="team-info">
                     <h3>Isabel Fernandes</h3>
@@ -252,7 +252,7 @@
             <!-- 4 -->
             <div class="team-card">
                 <div class="team-img-wrapper">
-                    <img src="{{ asset('assets/s.png') }}" alt="Ana Panzo">
+                    <img src="{{ asset('assets/s.png') }}" alt="Ana Panzo" loading="lazy" decoding="async">
                 </div>
                 <div class="team-info">
                     <h3>Ana Panzo</h3>
@@ -262,7 +262,7 @@
             <!-- 5 -->
             <div class="team-card">
                 <div class="team-img-wrapper">
-                    <img src="{{ asset('assets/cl (1).png') }}" alt="Francisco Cassule">
+                    <img src="{{ asset('assets/cl (1).png') }}" alt="Francisco Cassule" loading="lazy" decoding="async">
                 </div>
                 <div class="team-info">
                     <h3>Francisco Cassule</h3>
@@ -272,7 +272,7 @@
             <!-- 6 -->
             <div class="team-card">
                 <div class="team-img-wrapper">
-                    <img src="{{ asset('assets/cl (2).png') }}" alt="Teresa Paquice">
+                    <img src="{{ asset('assets/cl (2).png') }}" alt="Teresa Paquice" loading="lazy" decoding="async">
                 </div>
                 <div class="team-info">
                     <h3>Teresa Paquice</h3>
@@ -344,35 +344,35 @@
             <div class="ticker-track">
                 <!-- Original set -->
                 <div class="parceiro-card">
-                    <img src="{{ asset('assets/parceiros (1).png') }}" alt="Anglobal">
+                    <img src="{{ asset('assets/parceiros (1).png') }}" alt="Anglobal" loading="lazy" decoding="async">
                 </div>
                 <div class="parceiro-card">
-                    <img src="{{ asset('assets/parceiros (2).png') }}" alt="Luele">
+                    <img src="{{ asset('assets/parceiros (2).png') }}" alt="Luele" loading="lazy" decoding="async">
                 </div>
                 <div class="parceiro-card logo-dark">
-                    <img src="{{ asset('assets/parceiros (3).png') }}" alt="LIS">
+                    <img src="{{ asset('assets/parceiros (3).png') }}" alt="LIS" loading="lazy" decoding="async">
                 </div>
                 <div class="parceiro-card">
-                    <img src="{{ asset('assets/parceiros (4).png') }}" alt="Aurora">
+                    <img src="{{ asset('assets/parceiros (4).png') }}" alt="Aurora" loading="lazy" decoding="async">
                 </div>
                 <div class="parceiro-card">
-                    <img src="{{ asset('assets/parceiros (1).jpg') }}" alt="Lulo">
+                    <img src="{{ asset('assets/parceiros (1).jpg') }}" alt="Lulo" loading="lazy" decoding="async">
                 </div>
                 <!-- Duplicate set for seamless loop -->
                 <div class="parceiro-card">
-                    <img src="{{ asset('assets/parceiros (1).png') }}" alt="Anglobal">
+                    <img src="{{ asset('assets/parceiros (1).png') }}" alt="Anglobal" loading="lazy" decoding="async">
                 </div>
                 <div class="parceiro-card">
-                    <img src="{{ asset('assets/parceiros (2).png') }}" alt="Luele">
+                    <img src="{{ asset('assets/parceiros (2).png') }}" alt="Luele" loading="lazy" decoding="async">
                 </div>
                 <div class="parceiro-card logo-dark">
-                    <img src="{{ asset('assets/parceiros (3).png') }}" alt="LIS">
+                    <img src="{{ asset('assets/parceiros (3).png') }}" alt="LIS" loading="lazy" decoding="async">
                 </div>
                 <div class="parceiro-card">
-                    <img src="{{ asset('assets/parceiros (4).png') }}" alt="Aurora">
+                    <img src="{{ asset('assets/parceiros (4).png') }}" alt="Aurora" loading="lazy" decoding="async">
                 </div>
                 <div class="parceiro-card">
-                    <img src="{{ asset('assets/parceiros (1).jpg') }}" alt="Lulo">
+                    <img src="{{ asset('assets/parceiros (1).jpg') }}" alt="Lulo" loading="lazy" decoding="async">
                 </div>
             </div>
         </div>

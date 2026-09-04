@@ -124,7 +124,7 @@
                     </p>
                     <div class="flex items-center gap-3 mt-3 mb-4">
                         @if(isset($proxConsulta->profissional->user) && $proxConsulta->profissional->user->foto_perfil)
-                            <img src="{{ asset('storage/' . $proxConsulta->profissional->user->foto_perfil) }}" alt="Dr" class="w-10 h-10 rounded-full object-cover">
+                            <img src="{{ asset('storage/' . $proxConsulta->profissional->user->foto_perfil) }}" alt="Dr" class="w-10 h-10 rounded-full object-cover" loading="lazy" decoding="async">
                         @else
                             <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-xs font-bold flex-shrink-0">
                                 {{ $proxConsulta->profissional->user->iniciais ?? strtoupper(substr($proxConsulta->profissional->user->name ?? 'MC', 0, 2)) }}
@@ -188,7 +188,7 @@
                 <a href="{{ route('mensagens', ['conversa' => $conv->id]) }}" class="p-stack-md flex items-start gap-4 hover:bg-surface-container-lowest transition-colors cursor-pointer group">
                     <div class="relative flex-shrink-0">
                         @if($prof && $prof->user && $prof->user->foto_perfil)
-                            <img src="{{ asset('storage/' . $prof->user->foto_perfil) }}" alt="Dr" class="w-12 h-12 rounded-full object-cover">
+                            <img src="{{ asset('storage/' . $prof->user->foto_perfil) }}" alt="Dr" class="w-12 h-12 rounded-full object-cover" loading="lazy" decoding="async">
                         @else
                             <div class="w-12 h-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-sm font-bold">
                                 {{ $prof && $prof->user ? substr($prof->user->name, 0, 2) : 'MC' }}

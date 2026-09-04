@@ -53,7 +53,7 @@
             <div class="bg-surface-container-lowest rounded-xl p-stack-md flex flex-col items-center shadow-[0px_4px_12px_rgba(0,0,0,0.05)]">
                 <div class="relative mb-4">
                     @if(Auth::user()->foto_perfil)
-                        <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto" class="w-32 h-32 rounded-full object-cover border-4 border-surface-container shadow-md">
+                        <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto" class="w-32 h-32 rounded-full object-cover border-4 border-surface-container shadow-md" loading="lazy" decoding="async">
                     @else
                         <div class="w-32 h-32 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-3xl border-4 border-surface-container shadow-md">
                             {{ Auth::user()->iniciais ?? strtoupper(substr(Auth::user()->name, 0, 2)) }}

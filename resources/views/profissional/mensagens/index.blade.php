@@ -27,7 +27,7 @@
                    class="flex items-center gap-4 p-4 transition-colors cursor-pointer {{ $conversaActiva && $conversaActiva->id === $conversa->id ? 'bg-surface-container-high border-l-4 border-primary' : 'hover:bg-surface-container-low' }}">
                     <div class="relative flex-shrink-0">
                         @if($pacienteUser && $pacienteUser->foto_perfil)
-                            <img src="{{ asset('storage/' . $pacienteUser->foto_perfil) }}" alt="Paciente" class="h-12 w-12 rounded-full object-cover">
+                            <img src="{{ asset('storage/' . $pacienteUser->foto_perfil) }}" alt="Paciente" class="h-12 w-12 rounded-full object-cover" loading="lazy" decoding="async">
                         @else
                             <div class="h-12 w-12 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm">
                                 {{ $conversa->iniciais ?? ($pacienteUser?->iniciais ?? '?') }}
@@ -70,7 +70,7 @@
                         <span class="material-symbols-outlined text-[20px]">arrow_back</span>
                     </a>
                     @if($pacienteUser && $pacienteUser->foto_perfil)
-                        <img src="{{ asset('storage/' . $pacienteUser->foto_perfil) }}" alt="Paciente" class="h-10 w-10 rounded-full object-cover">
+                        <img src="{{ asset('storage/' . $pacienteUser->foto_perfil) }}" alt="Paciente" class="h-10 w-10 rounded-full object-cover" loading="lazy" decoding="async">
                     @else
                         <div class="h-10 w-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-sm">
                             {{ $conversaActiva->iniciais ?? ($pacienteUser?->iniciais ?? '?') }}
@@ -129,7 +129,7 @@
                         <!-- Message Received -->
                         <div class="flex items-end gap-3 max-w-[80%]" id="msg-{{ $mensagem->id }}">
                             @if($pacienteUser && $pacienteUser->foto_perfil)
-                                <img src="{{ asset('storage/' . $pacienteUser->foto_perfil) }}" alt="Paciente" class="h-8 w-8 rounded-full object-cover shrink-0 mb-1">
+                                <img src="{{ asset('storage/' . $pacienteUser->foto_perfil) }}" alt="Paciente" class="h-8 w-8 rounded-full object-cover shrink-0 mb-1" loading="lazy" decoding="async">
                             @else
                                 <div class="h-8 w-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-bold text-xs shrink-0 mb-1">
                                     {{ $conversaActiva->iniciais ?? ($pacienteUser?->iniciais ?? '?') }}

@@ -105,7 +105,7 @@
                 <div class="flex items-center justify-between px-5 py-4 hover:bg-surface-container-low transition-colors gap-3">
                     <div class="flex items-center gap-4 flex-1 min-w-0">
                         @if($user?->foto_perfil)
-                            <img src="{{ asset('storage/' . $user->foto_perfil) }}" alt="Foto" class="w-10 h-10 rounded-full object-cover flex-shrink-0">
+                            <img src="{{ asset('storage/' . $user->foto_perfil) }}" alt="Foto" class="w-10 h-10 rounded-full object-cover flex-shrink-0" loading="lazy" decoding="async">
                         @else
                             <div class="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-xs font-bold flex-shrink-0">
                                 {{ $user?->iniciais ?? '?' }}

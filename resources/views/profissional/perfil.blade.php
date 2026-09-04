@@ -8,7 +8,7 @@
     <div class="bg-white rounded-xl shadow-[0px_4px_12px_rgba(0,0,0,0.05)] border border-outline-variant/30 overflow-hidden mb-6">
         <div class="px-6 py-4 border-b border-outline-variant/30 flex items-center gap-4">
             @if($user->foto_perfil)
-                <img src="{{ Storage::url($user->foto_perfil) }}" class="w-14 h-14 rounded-full object-cover">
+                <img src="{{ Storage::url($user->foto_perfil) }}" class="w-14 h-14 rounded-full object-cover" loading="lazy" decoding="async">
             @else
                 <div class="w-14 h-14 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-lg">
                     {{ strtoupper(substr($user->name, 0, 1)) }}

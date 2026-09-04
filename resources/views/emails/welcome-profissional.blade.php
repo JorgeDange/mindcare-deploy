@@ -23,7 +23,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="{{ asset('assets/logoti.png') }}" alt="MindCare">
+            <img src="{{ asset('assets/logoti.png') }}" alt="MindCare" loading="lazy" decoding="async">
         </div>
         <div class="body">
             <h1>Bem-vindo(a), {{ $user->name }}!</h1>

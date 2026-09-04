@@ -43,7 +43,7 @@
         <!-- Essencial -->
         <div id="essencial" class="servicos-tab-pane active fade-up-on-scroll delay-700">
             <div class="servicos-content-img">
-                <img src="{{ asset('assets/card/plano4.png') }}" alt="Plano Corporativo Essencial">
+                <img src="{{ asset('assets/card/plano4.png') }}" alt="Plano Corporativo Essencial" loading="lazy" decoding="async">
             </div>
             <div class="servicos-content-info">
                 <div class="servicos-number-badge">01</div>
@@ -70,7 +70,7 @@
         <!-- Profissional -->
         <div id="profissional" class="servicos-tab-pane">
             <div class="servicos-content-img">
-                <img src="{{ asset('assets/card/plano4-1.png') }}" alt="Plano Corporativo Profissional">
+                <img src="{{ asset('assets/card/plano4-1.png') }}" alt="Plano Corporativo Profissional" loading="lazy" decoding="async">
             </div>
             <div class="servicos-content-info">
                 <div class="servicos-number-badge">02</div>
@@ -98,7 +98,7 @@
         <!-- Enterprise -->
         <div id="enterprise" class="servicos-tab-pane">
             <div class="servicos-content-img">
-                <img src="{{ asset('assets/card/plano4-2.png') }}" alt="Plano Corporativo Enterprise">
+                <img src="{{ asset('assets/card/plano4-2.png') }}" alt="Plano Corporativo Enterprise" loading="lazy" decoding="async">
             </div>
             <div class="servicos-content-info">
                 <div class="servicos-number-badge">03</div>

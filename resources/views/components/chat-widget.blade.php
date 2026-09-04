@@ -8,7 +8,7 @@
     <div id="chat-container">
         <div id="chat-header">
             <div class="header-info">
-                <img src="{{ asset('assets/logoti.png') }}" alt="MindCare">
+                <img src="{{ asset('assets/logoti.png') }}" alt="MindCare" loading="lazy" decoding="async">
                 <div>
                     <strong>MindCare</strong>
                     <span>Online | Assistente Virtual</span>

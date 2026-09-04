@@ -41,7 +41,7 @@
         <!-- Área Clínica -->
         <div id="clinica" class="servicos-tab-pane active fade-up-on-scroll delay-600">
             <div class="servicos-content-img">
-                <img src="{{ asset('assets/Consultoria2 - Cópia.jpg') }}" alt="Atendimento Clínico">
+                <img src="{{ asset('assets/Consultoria2 - Cópia.jpg') }}" alt="Atendimento Clínico" loading="lazy" decoding="async">
             </div>
             <div class="servicos-content-info">
                 <div class="servicos-number-badge">01</div>
@@ -71,7 +71,7 @@
         <!-- Formação -->
         <div id="formacao" class="servicos-tab-pane">
             <div class="servicos-content-img">
-                <img src="{{ asset('assets/TREINAMENTO IV (1).jpg') }}" alt="Formação">
+                <img src="{{ asset('assets/TREINAMENTO IV (1).jpg') }}" alt="Formação" loading="lazy" decoding="async">
             </div>
             <div class="servicos-content-info">
                 <div class="servicos-number-badge">02</div>
@@ -96,7 +96,7 @@
         <!-- Consultoria -->
         <div id="consultoria" class="servicos-tab-pane">
             <div class="servicos-content-img">
-                <img src="{{ asset('assets/MIND_PCA VI.jpg') }}" alt="Consultoria">
+                <img src="{{ asset('assets/MIND_PCA VI.jpg') }}" alt="Consultoria" loading="lazy" decoding="async">
             </div>
             <div class="servicos-content-info">
                 <div class="servicos-number-badge">03</div>

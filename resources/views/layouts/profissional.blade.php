@@ -386,7 +386,7 @@
 
                     <div class="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
                         @if(Auth::user()->foto_perfil)
-                            <img src="{{ Auth::user()->foto_url }}" alt="Foto de Perfil" class="w-full h-full object-cover rounded-full">
+                            <img src="{{ Auth::user()->foto_url }}" alt="Foto de Perfil" class="w-full h-full object-cover rounded-full" loading="lazy" decoding="async">
                         @else
                             <div class="w-full h-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-sm">
                                 {{ Auth::user()->iniciais ?? strtoupper(substr(Auth::user()->name, 0, 2)) }}

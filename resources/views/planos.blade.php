@@ -43,7 +43,7 @@
         <!-- Particular -->
         <div id="particular" class="servicos-tab-pane active fade-up-on-scroll delay-700">
             <div class="servicos-content-img">
-                <img src="{{ asset('assets/card/plano2.png') }}" alt="Plano Particular">
+                <img src="{{ asset('assets/card/plano2.png') }}" alt="Plano Particular" loading="lazy" decoding="async">
             </div>
             <div class="servicos-content-info">
                 <div class="servicos-number-badge">01</div>
@@ -72,7 +72,7 @@
         <!-- Familiar -->
         <div id="familiar" class="servicos-tab-pane">
             <div class="servicos-content-img">
-                <img src="{{ asset('assets/card/plano3.png') }}" alt="Plano Família">
+                <img src="{{ asset('assets/card/plano3.png') }}" alt="Plano Família" loading="lazy" decoding="async">
             </div>
             <div class="servicos-content-info">
                 <div class="servicos-number-badge">02</div>
@@ -101,7 +101,7 @@
         <!-- Corporativo -->
         <div id="corporativo" class="servicos-tab-pane">
             <div class="servicos-content-img">
-                <img src="{{ asset('assets/card/plano4.png') }}" alt="Plano Corporativo">
+                <img src="{{ asset('assets/card/plano4.png') }}" alt="Plano Corporativo" loading="lazy" decoding="async">
             </div>
             <div class="servicos-content-info">
                 <div class="servicos-number-badge">03</div>

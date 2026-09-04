@@ -34,7 +34,7 @@
                  data-nome="{{ strtolower($user?->name ?? '') }}">
                 @if($user?->foto_perfil)
                     <img src="{{ asset('storage/' . $user->foto_perfil) }}" alt="Foto"
-                         class="w-12 h-12 rounded-full object-cover flex-shrink-0">
+                         class="w-12 h-12 rounded-full object-cover flex-shrink-0" loading="lazy" decoding="async">
                 @else
                     <div class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-sm font-bold flex-shrink-0">
                         {{ $user?->iniciais ?? '?' }}

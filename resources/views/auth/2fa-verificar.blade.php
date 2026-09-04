@@ -14,7 +14,7 @@
 <div class="min-h-screen flex items-center justify-center bg-surface px-4 py-8">
     <div class="w-full max-w-[500px]">
         <div class="text-center mb-8">
-            <img src="{{ asset('assets/logoti.png') }}" alt="MindCare" class="h-12 mx-auto mb-4">
+            <img src="{{ asset('assets/logoti.png') }}" alt="MindCare" class="h-12 mx-auto mb-4" loading="lazy" decoding="async">
             <h2 class="font-headline-lg text-headline-lg text-on-surface">Verificação 2FA</h2>
             <p class="font-body-md text-on-surface-variant mt-2">Insira o código do seu aplicativo autenticador.</p>
         </div>

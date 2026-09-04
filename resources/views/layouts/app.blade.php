@@ -148,7 +148,7 @@
         <!-- Menu mobile -->
         <nav class="menu-mobile" id="menuMobile">
             <div class="menu-header">
-                <img src="{{ asset('assets/logoti.png') }}" alt="MindCare">
+                <img src="{{ asset('assets/logoti.png') }}" alt="MindCare" loading="lazy" decoding="async">
                 <button class="close-menu" id="closeMenu"><i data-lucide="x"></i></button>
             </div>
             <ul class="menu-links">
@@ -193,7 +193,7 @@
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-column brand-col">
-                <img src="{{ asset('assets/logoti.png') }}" alt="MindCare Logo" class="footer-logo-img">
+                <img src="{{ asset('assets/logoti.png') }}" alt="MindCare Logo" class="footer-logo-img" loading="lazy" decoding="async">
                 <p class="brand-description">
                     Cuidando da sua saúde mental com excelência e humanização. Referência em psicologia clínica,
                     organizacional e terapias especializadas.

@@ -31,7 +31,7 @@
         <div class="relative flex flex-col md:flex-row items-center gap-8">
             <div class="relative group cursor-pointer" onclick="document.getElementById('foto-input').click()">
                 @if(Auth::user()->foto_perfil)
-                    <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto de Perfil" class="w-32 h-32 rounded-full object-cover border-4 border-white shadow-md">
+                    <img src="{{ asset('storage/' . Auth::user()->foto_perfil) }}" alt="Foto de Perfil" class="w-32 h-32 rounded-full object-cover border-4 border-white shadow-md" loading="lazy" decoding="async">
                 @else
                     <div class="w-32 h-32 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center font-bold text-3xl border-4 border-white shadow-md">
                         {{ Auth::user()->iniciais ?? strtoupper(substr(Auth::user()->name, 0, 2)) }}

@@ -46,7 +46,7 @@
         <!-- Básico -->
         <div id="basico" class="servicos-tab-pane active fade-up-on-scroll delay-700">
             <div class="servicos-content-img">
-                <img src="{{ asset('assets/card/plano3.png') }}" alt="Plano Familiar Básico">
+                <img src="{{ asset('assets/card/plano3.png') }}" alt="Plano Familiar Básico" loading="lazy" decoding="async">
             </div>
             <div class="servicos-content-info">
                 <div class="servicos-number-badge">01</div>
@@ -72,7 +72,7 @@
         <!-- Avançado -->
         <div id="avancado" class="servicos-tab-pane">
             <div class="servicos-content-img">
-                <img src="{{ asset('assets/card/plano3-1.png') }}" alt="Plano Familiar Avançado">
+                <img src="{{ asset('assets/card/plano3-1.png') }}" alt="Plano Familiar Avançado" loading="lazy" decoding="async">
             </div>
             <div class="servicos-content-info">
                 <div class="servicos-number-badge">02</div>
@@ -102,7 +102,7 @@
         <!-- Premium -->
         <div id="premium" class="servicos-tab-pane">
             <div class="servicos-content-img">
-                <img src="{{ asset('assets/card/plano3-2.png') }}" alt="Plano Familiar Premium">
+                <img src="{{ asset('assets/card/plano3-2.png') }}" alt="Plano Familiar Premium" loading="lazy" decoding="async">
             </div>
             <div class="servicos-content-info">
                 <div class="servicos-number-badge">03</div>
@@ -131,7 +131,7 @@
         <!-- Kandengue -->
         <div id="kandengue" class="servicos-tab-pane">
             <div class="servicos-content-img">
-                <img src="{{ asset('assets/card/plano1.png') }}" alt="Plano Kandengue">
+                <img src="{{ asset('assets/card/plano1.png') }}" alt="Plano Kandengue" loading="lazy" decoding="async">
             </div>
             <div class="servicos-content-info">
                 <div class="servicos-number-badge">04</div>

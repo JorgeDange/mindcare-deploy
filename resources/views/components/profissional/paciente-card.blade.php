@@ -9,7 +9,7 @@
 <div class="bg-white rounded-xl p-5 shadow-[0px_4px_12px_rgba(0,0,0,0.05)] border border-outline-variant/30 flex items-center gap-4">
     @if($user?->foto_perfil)
         <img src="{{ asset('storage/' . $user->foto_perfil) }}" alt="Foto"
-             class="w-12 h-12 rounded-full object-cover flex-shrink-0">
+             class="w-12 h-12 rounded-full object-cover flex-shrink-0" loading="lazy" decoding="async">
     @else
         <div class="w-12 h-12 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-sm font-bold flex-shrink-0">
             {{ $user?->iniciais ?? '?' }}

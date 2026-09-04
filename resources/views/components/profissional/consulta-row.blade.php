@@ -17,7 +17,7 @@
         <div class="flex items-center gap-3">
             @if($user?->foto_perfil)
                 <img src="{{ asset('storage/' . $user->foto_perfil) }}" alt="Foto"
-                     class="w-9 h-9 rounded-full object-cover">
+                     class="w-9 h-9 rounded-full object-cover" loading="lazy" decoding="async">
             @else
                 <div class="w-9 h-9 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-xs font-bold">
                     {{ $user?->iniciais ?? '?' }}

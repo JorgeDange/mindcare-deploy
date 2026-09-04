@@ -43,7 +43,7 @@
         <!-- Básico -->
         <div id="basico" class="servicos-tab-pane active fade-up-on-scroll delay-700">
             <div class="servicos-content-img">
-                <img src="{{ asset('assets/card/plano2.png') }}" alt="Plano Básico">
+                <img src="{{ asset('assets/card/plano2.png') }}" alt="Plano Básico" loading="lazy" decoding="async">
             </div>
             <div class="servicos-content-info">
                 <div class="servicos-number-badge">01</div>
@@ -70,7 +70,7 @@
         <!-- Avançado -->
         <div id="avancado" class="servicos-tab-pane">
             <div class="servicos-content-img">
-                <img src="{{ asset('assets/card/plano2-1.png') }}" alt="Plano Avançado">
+                <img src="{{ asset('assets/card/plano2-1.png') }}" alt="Plano Avançado" loading="lazy" decoding="async">
             </div>
             <div class="servicos-content-info">
                 <div class="servicos-number-badge">02</div>
@@ -98,7 +98,7 @@
         <!-- Premium -->
         <div id="premium" class="servicos-tab-pane">
             <div class="servicos-content-img">
-                <img src="{{ asset('assets/card/plano2-2.png') }}" alt="Plano Premium">
+                <img src="{{ asset('assets/card/plano2-2.png') }}" alt="Plano Premium" loading="lazy" decoding="async">
             </div>
             <div class="servicos-content-info">
                 <div class="servicos-number-badge">03</div>
