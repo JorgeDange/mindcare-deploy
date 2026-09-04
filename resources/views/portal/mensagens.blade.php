@@ -39,7 +39,7 @@
                     
                     <div class="flex-1 overflow-hidden">
                         <div class="flex justify-between items-center">
-                            <span class="font-bold text-on-surface truncate">{{ $conversa->contacto }}</span>
+                            <span class="font-bold text-on-surface truncate">{{ $prof && $prof->user ? $prof->user->name : $conversa->contacto }}</span>
                             <span class="text-[10px] text-on-surface-variant flex-shrink-0 ml-1">{{ $conversa->mensagens->last() ? $conversa->mensagens->last()->created_at->diffForHumans() : '' }}</span>
                         </div>
                         <p class="text-body-sm text-on-surface-variant truncate mt-0.5">
@@ -74,7 +74,7 @@
                         </div>
                     @endif
                     <div>
-                        <h3 class="font-bold text-on-surface text-sm leading-tight">{{ $conversaActiva->contacto }}</h3>
+                        <h3 class="font-bold text-on-surface text-sm leading-tight">{{ $profActivo && $profActivo->user ? $profActivo->user->name : $conversaActiva->contacto }}</h3>
                         <span class="text-[10px] text-green-600 flex items-center gap-1 mt-0.5" id="chat-status">
                             <span class="w-1.5 h-1.5 bg-green-600 rounded-full"></span> Online agora
                         </span>
