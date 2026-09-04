@@ -25,6 +25,10 @@ class Paciente extends Model
         'observacoes_profissional',
         'historico_familiar',
         'plano_terapeutico',
+        'frequencia_cardiaca',
+        'pressao_sistolica',
+        'pressao_diastolica',
+        'peso',
         'data_inicio',
         'preferencias',
     ];

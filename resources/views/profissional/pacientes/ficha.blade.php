@@ -36,6 +36,41 @@
             @csrf
             @method('PUT')
 
+            <!-- Sinais Vitais -->
+            <div>
+                <label class="block text-body-sm font-medium text-on-surface mb-1">Sinais Vitais</label>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div>
+                        <label class="block text-xs text-on-surface-variant mb-1">Freq. Cardíaca (bpm)</label>
+                        <input type="number" name="frequencia_cardiaca" min="30" max="250"
+                            value="{{ old('frequencia_cardiaca', $paciente->frequencia_cardiaca) }}"
+                            placeholder="--"
+                            class="w-full rounded-lg border border-outline-variant/50 px-3 py-2 text-body-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none bg-surface-container-lowest">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-on-surface-variant mb-1">Pressão Sistólica (mmHg)</label>
+                        <input type="number" name="pressao_sistolica" min="60" max="300"
+                            value="{{ old('pressao_sistolica', $paciente->pressao_sistolica) }}"
+                            placeholder="--"
+                            class="w-full rounded-lg border border-outline-variant/50 px-3 py-2 text-body-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none bg-surface-container-lowest">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-on-surface-variant mb-1">Pressão Diastólica (mmHg)</label>
+                        <input type="number" name="pressao_diastolica" min="30" max="200"
+                            value="{{ old('pressao_diastolica', $paciente->pressao_diastolica) }}"
+                            placeholder="--"
+                            class="w-full rounded-lg border border-outline-variant/50 px-3 py-2 text-body-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none bg-surface-container-lowest">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-on-surface-variant mb-1">Peso (kg)</label>
+                        <input type="number" name="peso" min="1" max="500" step="0.1"
+                            value="{{ old('peso', $paciente->peso) }}"
+                            placeholder="--"
+                            class="w-full rounded-lg border border-outline-variant/50 px-3 py-2 text-body-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none bg-surface-container-lowest">
+                    </div>
+                </div>
+            </div>
+
             <div>
                 <label class="block text-body-sm font-medium text-on-surface mb-1">Diagnóstico</label>
                 <textarea name="diagnostico" rows="3"

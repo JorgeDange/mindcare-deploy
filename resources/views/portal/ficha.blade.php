@@ -156,7 +156,7 @@
                 </header>
 
                 <div class="grid grid-cols-12 gap-gutter">
-                    <!-- Vital Signs / Health Indicators (Placeholder for future data) -->
+                    <!-- Vital Signs / Health Indicators -->
                     <section class="col-span-12 md:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-stack-md">
                         <div class="bg-surface-container-lowest p-stack-md rounded-xl shadow-[0px_4px_12px_rgba(0,0,0,0.05)] flex flex-col justify-between border-t-4 border-primary">
                             <div class="flex justify-between items-start">
@@ -164,7 +164,7 @@
                                 <span class="material-symbols-outlined text-primary">favorite</span>
                             </div>
                             <div class="mt-stack-sm">
-                                <h3 class="font-headline-md text-headline-md">-- <span class="text-body-sm font-normal text-on-surface-variant">bpm</span></h3>
+                                <h3 class="font-headline-md text-headline-md">{{ $paciente->frequencia_cardiaca ?? '--' }} <span class="text-body-sm font-normal text-on-surface-variant">bpm</span></h3>
                             </div>
                         </div>
                         <div class="bg-surface-container-lowest p-stack-md rounded-xl shadow-[0px_4px_12px_rgba(0,0,0,0.05)] flex flex-col justify-between border-t-4 border-secondary">
@@ -173,7 +173,7 @@
                                 <span class="material-symbols-outlined text-secondary">speed</span>
                             </div>
                             <div class="mt-stack-sm">
-                                <h3 class="font-headline-md text-headline-md">--/-- <span class="text-body-sm font-normal text-on-surface-variant">mmHg</span></h3>
+                                <h3 class="font-headline-md text-headline-md">{{ $paciente->pressao_sistolica ?? '--' }}/{{ $paciente->pressao_diastolica ?? '--' }} <span class="text-body-sm font-normal text-on-surface-variant">mmHg</span></h3>
                             </div>
                         </div>
                         <div class="bg-surface-container-lowest p-stack-md rounded-xl shadow-[0px_4px_12px_rgba(0,0,0,0.05)] flex flex-col justify-between border-t-4 border-tertiary">
@@ -182,7 +182,7 @@
                                 <span class="material-symbols-outlined text-tertiary">monitor_weight</span>
                             </div>
                             <div class="mt-stack-sm">
-                                <h3 class="font-headline-md text-headline-md">-- <span class="text-body-sm font-normal text-on-surface-variant">kg</span></h3>
+                                <h3 class="font-headline-md text-headline-md">{{ $paciente->peso ?? '--' }} <span class="text-body-sm font-normal text-on-surface-variant">kg</span></h3>
                             </div>
                         </div>
                     </section>

@@ -323,6 +323,10 @@ class ProfissionalController extends Controller
             'historico_familiar' => 'nullable|string|max:5000',
             'observacoes_profissional' => 'nullable|string|max:5000',
             'plano_terapeutico' => 'nullable|string|max:5000',
+            'frequencia_cardiaca' => 'nullable|integer|min:30|max:250',
+            'pressao_sistolica' => 'nullable|integer|min:60|max:300',
+            'pressao_diastolica' => 'nullable|integer|min:30|max:200',
+            'peso' => 'nullable|numeric|min:1|max:500',
         ]);
 
         $paciente->update($validated);
